@@ -26,9 +26,8 @@ AGENTS.md             Entry point for AI coding agents
 2. Use [Agentic Property Generation](docs/agentic-property-generation.md) when working in Codex, Claude, ChatGPT, or another agentic coding environment. AI agents should start at [AGENTS.md](AGENTS.md).
 3. Use [Agent Playbook: Create Import](docs/agent-playbook-create-import.md) as the agent instruction block.
 4. Use [Percent-Of-Line Reference Options](docs/line-reference-options.md) when creating `% of Line` income, expense, CapEx, or hotel operating lines.
-5. Use [Sample Portfolio Example](docs/sample-portfolio-generation.md) only as an example multi-property pattern.
-6. Validate output with `tools/validate-import-json.py` (schema validation plus reference-integrity checks).
-7. Read [Export Guide](docs/export-guide.md) and [Excel Embedded JSON](docs/excel-embedded-json.md) to extract and map exported workbooks.
+5. Validate output with `tools/validate-import-json.py` (schema validation plus reference-integrity checks).
+6. Read [Export Guide](docs/export-guide.md) and [Excel Embedded JSON](docs/excel-embedded-json.md) to extract and map exported workbooks.
 
 ## Why A Git Repo Instead Of A PDF
 

@@ -37,9 +37,7 @@ Prefer source data over generic assumptions. If a required field is missing, mak
 
 ## Multi-Property Mode
 
-When the user asks for a portfolio or multiple properties, create one valid import JSON document per property. Do not force the exact sample portfolio names unless the user asks for that specific demo suite.
-
-Use [Sample Portfolio Example](sample-portfolio-generation.md) only as an example of realistic scale, line-item depth, and property-family coverage.
+When the user asks for a portfolio or multiple properties, create one valid import JSON document per property. Take property names, scale, and assumptions from the user's instructions and source data.
 
 ## Reference Integrity Checks
 
@@ -66,6 +64,6 @@ When the user asks for a review, return:
 
 Keep the review separate from the JSON payload.
 
-## Forbidden Behavior
+## Scope
 
-Do not infer Baseline formulas. Do not compute valuation outputs. Do not include implementation notes. Do not explain how Baseline calculates results.
+Generated payloads describe model inputs. Baseline performs all calculations — leave valuation results, computed outputs, and commentary about how results are produced out of the payload and out of the response.

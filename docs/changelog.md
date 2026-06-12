@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 — 2026-06-12
+
+- Removed the sample portfolio generation guide. Property assumptions (rates, values, occupancy) come from the user's own data and instructions; the kit does not suggest them.
+- Reworded scope sections in the agent guides to describe the input-only contract neutrally.
+
 ## 0.2.0 — 2026-06-11
 
 Matches Baseline input schema version `1.0` (contract snapshot of 2026-06-11).

@@ -1,6 +1,6 @@
 # Security And Boundaries
 
-This kit is designed for integration, not reverse engineering.
+This kit documents Baseline's public integration surface. This page defines what is part of that surface and what is not.
 
 ## Safe To Share
 

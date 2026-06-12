@@ -80,9 +80,7 @@ Hotel-specific operating assumptions belong in `hotel`, not in commercial tenant
 
 For a user or agent creating properties from narrative instructions or dropped-in source files, use [Agentic Property Generation](agentic-property-generation.md). That guide explains the recommended Git repo workflow, source-file folder pattern, property-type mapping rules, validation boundary, and output expectations.
 
-Use [Sample Portfolio Example](sample-portfolio-generation.md) as an example pattern for a multi-property demo suite. It is not required for ordinary property generation.
-
-The important distinction is that this import guide explains the JSON contract, while the agentic guide explains how to work from source material to validated JSON without exposing the calculation engine.
+The important distinction is that this import guide explains the JSON contract, while the agentic guide explains how to work from source material to validated JSON.
 
 ## Values and Nulls
 

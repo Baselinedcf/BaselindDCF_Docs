@@ -74,14 +74,11 @@ The agent may generate:
 - income, expense, capex, debt, and resale input sections where schema-supported,
 - concise human-readable assumption notes outside the JSON.
 
-The agent must not generate:
+Outside the scope of generation:
 
-- calculated outputs,
-- valuation results presented as engine results,
-- formulas or calculation explanations,
+- calculated outputs or valuation results — Baseline computes these,
 - fields not present in the schemas,
-- hidden implementation details,
-- examples designed to reverse-engineer the calculation engine.
+- commentary on how Baseline produces results.
 
 ## Narrative Input Pattern
 
@@ -136,4 +133,4 @@ The final response should include:
 
 ## Examples
 
-Use [Sample Portfolio Example](sample-portfolio-generation.md) as an example pattern for creating a multi-property demo suite. It is not the only acceptable portfolio, and agents should not force user requests into those exact property names or assumptions.
+Minimal schema-valid starter payloads for each property family live in `examples/`. See [examples/README.md](../examples/README.md).
