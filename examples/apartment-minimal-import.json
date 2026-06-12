@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "file_id": "demo-apartment-001",
+    "property_type": "apartment",
+    "property_name": "Demo Apartment Property",
+    "currency": "USD",
+    "area_unit": "sf",
+    "property_area": 50000,
+    "number_of_units": 50,
+    "analysis_start_month": 1,
+    "analysis_start_year": 2026,
+    "holding_period_years": 5,
+    "holding_period_months": 0,
+    "income_expense_start_method": "analysis_start",
+    "expense_recovery_inflation_method": "fiscal_recovery_fiscal_inflation",
+    "default_inflation_method": "constant",
+    "default_inflation_rate": 0.03,
+    "vacancy_method": "reduce_by_turnover_vacancy",
+    "vacancy_rate_method": "constant",
+    "vacancy_rate": 0.05,
+    "credit_loss_method": "constant_annual",
+    "credit_loss_rate": 0.01
+  },
+  "unit_rental": {
+    "modeling_method": "simple",
+    "unit_types": [
+      {
+        "subtype": "apartment",
+        "unit_type_id": "1br",
+        "description": "1 Bedroom",
+        "num_units": 30,
+        "unit_size": 700,
+        "units_vacant": 2,
+        "standard_lease_term": 12,
+        "market_rent": {
+          "method": "monthly_per_unit",
+          "value": 1500
+        },
+        "in_place_rent": {
+          "method": "monthly_per_unit",
+          "value": 1450
+        },
+        "renewal_probability_rate": 0.6,
+        "downtime_months": 1
+      },
+      {
+        "subtype": "apartment",
+        "unit_type_id": "2br",
+        "description": "2 Bedroom",
+        "num_units": 20,
+        "unit_size": 950,
+        "units_vacant": 1,
+        "standard_lease_term": 12,
+        "market_rent": {
+          "method": "monthly_per_unit",
+          "value": 1950
+        },
+        "in_place_rent": {
+          "method": "monthly_per_unit",
+          "value": 1850
+        },
+        "renewal_probability_rate": 0.6,
+        "downtime_months": 1
+      }
+    ]
+  },
+  "income": [],
+  "expenses": [],
+  "capex": [],
+  "debt": [],
+  "resale_pv": {
+    "sale_date_method": "end_of_holding_period",
+    "discount_rate": 0.085,
+    "reversion_method": "capitalize_forward_noi",
+    "terminal_cap_rate": 0.055,
+    "cost_of_sale_pct": 0.02
+  }
+}
+

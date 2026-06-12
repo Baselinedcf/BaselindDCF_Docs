@@ -1,0 +1,710 @@
+{
+  "$defs": {
+    "AllocationEntry": {
+      "additionalProperties": false,
+      "description": "A single line item allocation within a recovery pool.",
+      "properties": {
+        "allocation_pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Allocation Pct",
+          "type": "number"
+        },
+        "ref_key": {
+          "title": "Ref Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ref_key",
+        "allocation_pct"
+      ],
+      "title": "AllocationEntry",
+      "type": "object"
+    },
+    "ExpenseGroupRef": {
+      "additionalProperties": false,
+      "description": "Per-group configuration for expense_group_ref recovery structures.",
+      "properties": {
+        "cam_cap_annual_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cam Cap Annual Pct"
+        },
+        "group_id": {
+          "title": "Group Id",
+          "type": "string"
+        },
+        "pro_rata_allocation": {
+          "default": "rentable",
+          "enum": [
+            "rentable",
+            "occupied"
+          ],
+          "title": "Pro Rata Allocation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "group_id"
+      ],
+      "title": "ExpenseGroupRef",
+      "type": "object"
+    },
+    "RecoveryComponent": {
+      "description": "One row in a combined recovery structure.",
+      "properties": {
+        "cam_cap_annual_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cam Cap Annual Pct"
+        },
+        "cam_cap_method": {
+          "default": "none",
+          "enum": [
+            "none",
+            "annual_pct_increase"
+          ],
+          "title": "Cam Cap Method",
+          "type": "string"
+        },
+        "custom_inflation_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Custom Inflation Rate"
+        },
+        "expense_group_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expense Group Ref"
+        },
+        "expense_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expense Ref"
+        },
+        "fixed_amount": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fixed Amount"
+        },
+        "fixed_amount_per_uom": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fixed Amount Per Uom"
+        },
+        "pro_rata_alternate_area_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pro Rata Alternate Area Ref"
+        },
+        "pro_rata_area_source": {
+          "anyOf": [
+            {
+              "enum": [
+                "property_area",
+                "alternate_area_ref"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pro Rata Area Source"
+        },
+        "pro_rata_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "calc_on_area",
+                "input_pct"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pro Rata Method"
+        },
+        "pro_rata_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pro Rata Pct"
+        },
+        "recovery_calc": {
+          "enum": [
+            "net",
+            "base_year",
+            "base_year_amount",
+            "base_year_amount_per_uom",
+            "flat_amount",
+            "flat_amount_per_uom",
+            "stop_amount",
+            "stop_amount_per_uom"
+          ],
+          "title": "Recovery Calc",
+          "type": "string"
+        },
+        "stop_amount": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stop Amount"
+        },
+        "stop_amount_per_uom": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stop Amount Per Uom"
+        }
+      },
+      "required": [
+        "recovery_calc"
+      ],
+      "title": "RecoveryComponent",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Expense recovery methods (NNN, gross, base year, etc.).",
+  "items": {
+    "description": "An expense recovery method definition.",
+    "properties": {
+      "account_code": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Account Code"
+      },
+      "admin_fee_override_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Admin Fee Override Pct"
+      },
+      "anchor_fixed_annual_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Anchor Fixed Annual Amount"
+      },
+      "anchor_method": {
+        "default": "none",
+        "enum": [
+          "none",
+          "fixed_amount",
+          "pro_rata_capped"
+        ],
+        "title": "Anchor Method",
+        "type": "string"
+      },
+      "anchor_tenant_refs": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Anchor Tenant Refs"
+      },
+      "base_annual_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Base Annual Amount"
+      },
+      "base_per_uom": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Base Per Uom"
+      },
+      "base_year_start": {
+        "anyOf": [
+          {
+            "enum": [
+              "year_of_lease_start",
+              "year_of_lease_start_plus_1",
+              "year_of_lease_start_minus_1"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Base Year Start"
+      },
+      "cam_cap_annual_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Cam Cap Annual Pct"
+      },
+      "cam_cap_method": {
+        "default": "none",
+        "enum": [
+          "none",
+          "annual_pct_increase"
+        ],
+        "title": "Cam Cap Method",
+        "type": "string"
+      },
+      "components": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/RecoveryComponent"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Components"
+      },
+      "expense_group_config": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/ExpenseGroupRef"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Expense Group Config"
+      },
+      "expense_group_refs": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Expense Group Refs"
+      },
+      "expenses_included": {
+        "enum": [
+          "all_expenses",
+          "specified_line_items",
+          "expense_group_ref"
+        ],
+        "title": "Expenses Included",
+        "type": "string"
+      },
+      "flat_custom_inflation_rates": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Flat Custom Inflation Rates"
+      },
+      "flat_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Flat Inflation Ref"
+      },
+      "flat_monthly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Flat Monthly Values"
+      },
+      "flat_yearly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Flat Yearly Values"
+      },
+      "grossup_occupancy": {
+        "title": "Grossup Occupancy",
+        "type": "boolean"
+      },
+      "grossup_occupancy_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Grossup Occupancy Pct"
+      },
+      "max_tenant_recovery_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Max Tenant Recovery Amount"
+      },
+      "max_tenant_recovery_per_uom": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Max Tenant Recovery Per Uom"
+      },
+      "min_tenant_recovery_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Min Tenant Recovery Amount"
+      },
+      "min_tenant_recovery_per_uom": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Min Tenant Recovery Per Uom"
+      },
+      "pro_rata_alternate_area_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pro Rata Alternate Area Ref"
+      },
+      "pro_rata_area_source": {
+        "anyOf": [
+          {
+            "enum": [
+              "property_area",
+              "alternate_area_ref"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pro Rata Area Source"
+      },
+      "pro_rata_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "calc_on_area",
+              "input_pct"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pro Rata Method"
+      },
+      "pro_rata_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pro Rata Pct"
+      },
+      "recovery_method_id": {
+        "title": "Recovery Method Id",
+        "type": "string"
+      },
+      "recovery_method_name": {
+        "title": "Recovery Method Name",
+        "type": "string"
+      },
+      "recovery_type": {
+        "enum": [
+          "no_recoveries",
+          "net",
+          "gross_over_base_year",
+          "gross_over_base_year_amount",
+          "gross_over_base_year_per_uom",
+          "flat_amount",
+          "flat_amount_per_uom",
+          "combined"
+        ],
+        "title": "Recovery Type",
+        "type": "string"
+      },
+      "specified_allocations": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/AllocationEntry"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Specified Allocations"
+      },
+      "stop_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Stop Amount"
+      },
+      "stop_amount_per_uom": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Stop Amount Per Uom"
+      }
+    },
+    "required": [
+      "recovery_method_id",
+      "recovery_method_name",
+      "expenses_included",
+      "grossup_occupancy",
+      "recovery_type"
+    ],
+    "title": "RecoveryMethod",
+    "type": "object"
+  },
+  "maxItems": 100,
+  "title": "RecoveryMethodList",
+  "type": "array"
+}

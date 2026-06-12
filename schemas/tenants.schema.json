@@ -1,0 +1,1363 @@
+{
+  "$defs": {
+    "AbatementMonthEntry": {
+      "additionalProperties": false,
+      "description": "A single month in a per-month abatement schedule.",
+      "properties": {
+        "abatement_pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Abatement Pct",
+          "type": "number"
+        },
+        "lease_month": {
+          "minimum": 1,
+          "title": "Lease Month",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_month",
+        "abatement_pct"
+      ],
+      "title": "AbatementMonthEntry",
+      "type": "object"
+    },
+    "AreaRemeasurementChange": {
+      "additionalProperties": false,
+      "description": "A scheduled change to a suite's rentable SF (area remeasurement).",
+      "properties": {
+        "at_renewal": {
+          "default": true,
+          "title": "At Renewal",
+          "type": "boolean"
+        },
+        "effective_date": {
+          "anyOf": [
+            {
+              "pattern": "^(\\d{4}-\\d{2}-\\d{2})?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective Date"
+        },
+        "new_sf": {
+          "minimum": 0,
+          "title": "New Sf",
+          "type": "number"
+        }
+      },
+      "required": [
+        "new_sf"
+      ],
+      "title": "AreaRemeasurementChange",
+      "type": "object"
+    },
+    "GrowthRateConfig": {
+      "additionalProperties": false,
+      "description": "Growth rate source configuration for rent annual increases.",
+      "properties": {
+        "growth_method_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Growth Method Ref"
+        },
+        "method": {
+          "enum": [
+            "select_growth_rate",
+            "input_annual_pct"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rate"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "GrowthRateConfig",
+      "type": "object"
+    },
+    "LcDetailedEntry": {
+      "additionalProperties": false,
+      "description": "A single LC disbursement at a specific lease month.",
+      "properties": {
+        "amount": {
+          "minimum": 0,
+          "title": "Amount",
+          "type": "number"
+        },
+        "lease_month": {
+          "maximum": 240,
+          "minimum": 1,
+          "title": "Lease Month",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_month",
+        "amount"
+      ],
+      "title": "LcDetailedEntry",
+      "type": "object"
+    },
+    "PctRentTier": {
+      "additionalProperties": false,
+      "description": "A tier in tiered percentage rent.",
+      "properties": {
+        "pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Pct",
+          "type": "number"
+        },
+        "sales_above": {
+          "minimum": 0,
+          "title": "Sales Above",
+          "type": "number"
+        }
+      },
+      "required": [
+        "sales_above",
+        "pct"
+      ],
+      "title": "PctRentTier",
+      "type": "object"
+    },
+    "RentChangeEntry": {
+      "additionalProperties": false,
+      "description": "A single rent change in a changing_rent schedule.",
+      "properties": {
+        "change_type": {
+          "enum": [
+            "pct_increase",
+            "amount",
+            "amount_year",
+            "amount_month",
+            "amount_per_uom",
+            "amount_per_uom_month",
+            "dollar_increase"
+          ],
+          "title": "Change Type",
+          "type": "string"
+        },
+        "day_of_month": {
+          "default": 1,
+          "maximum": 31,
+          "minimum": 1,
+          "title": "Day Of Month",
+          "type": "integer"
+        },
+        "lease_month": {
+          "minimum": 1,
+          "title": "Lease Month",
+          "type": "integer"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lease_month",
+        "change_type",
+        "value"
+      ],
+      "title": "RentChangeEntry",
+      "type": "object"
+    },
+    "Suite": {
+      "additionalProperties": false,
+      "description": "A single suite within a tenant's leased space.",
+      "properties": {
+        "area_remeasurement_changes": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/AreaRemeasurementChange"
+              },
+              "maxItems": 20,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Area Remeasurement Changes"
+        },
+        "current_sf": {
+          "minimum": 0,
+          "title": "Current Sf",
+          "type": "number"
+        },
+        "floor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Floor"
+        },
+        "suite_id": {
+          "title": "Suite Id",
+          "type": "string"
+        },
+        "suite_name": {
+          "title": "Suite Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "suite_id",
+        "suite_name",
+        "current_sf"
+      ],
+      "title": "Suite",
+      "type": "object"
+    },
+    "TiDetailedEntry": {
+      "additionalProperties": false,
+      "description": "A single TI disbursement at a specific lease month.",
+      "properties": {
+        "amount": {
+          "minimum": 0,
+          "title": "Amount",
+          "type": "number"
+        },
+        "lease_month": {
+          "maximum": 240,
+          "minimum": 1,
+          "title": "Lease Month",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_month",
+        "amount"
+      ],
+      "title": "TiDetailedEntry",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Rent roll: list of tenant lease records.",
+  "items": {
+    "additionalProperties": false,
+    "description": "A single tenant/lease record in the rent roll.",
+    "properties": {
+      "abatement_market": {
+        "default": false,
+        "title": "Abatement Market",
+        "type": "boolean"
+      },
+      "abatement_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "category_ref",
+              "months_free_at_start",
+              "pct_by_specific_lease_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Method"
+      },
+      "abatement_monthly_schedule": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/AbatementMonthEntry"
+            },
+            "maxItems": 25,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Monthly Schedule"
+      },
+      "abatement_months": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Months"
+      },
+      "abatement_months_include_increases": {
+        "default": false,
+        "title": "Abatement Months Include Increases",
+        "type": "boolean"
+      },
+      "abatement_months_include_recoveries": {
+        "default": false,
+        "title": "Abatement Months Include Recoveries",
+        "type": "boolean"
+      },
+      "abatement_pct_include_increases": {
+        "default": false,
+        "title": "Abatement Pct Include Increases",
+        "type": "boolean"
+      },
+      "abatement_pct_include_recoveries": {
+        "default": false,
+        "title": "Abatement Pct Include Recoveries",
+        "type": "boolean"
+      },
+      "abatement_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Ref"
+      },
+      "available_date": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Available Date"
+      },
+      "base_rent_type": {
+        "enum": [
+          "per_uom_year",
+          "per_uom_month",
+          "amount_year",
+          "amount_month"
+        ],
+        "title": "Base Rent Type",
+        "type": "string"
+      },
+      "downtime_months_override": {
+        "anyOf": [
+          {
+            "maximum": 120,
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Downtime Months Override"
+      },
+      "exclude_from_credit_loss": {
+        "default": false,
+        "title": "Exclude From Credit Loss",
+        "type": "boolean"
+      },
+      "exclude_from_general_vacancy": {
+        "default": false,
+        "title": "Exclude From General Vacancy",
+        "type": "boolean"
+      },
+      "floor": {
+        "anyOf": [
+          {
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Floor"
+      },
+      "has_renewal_option": {
+        "default": false,
+        "title": "Has Renewal Option",
+        "type": "boolean"
+      },
+      "key_money_detailed_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Detailed Inflation Ref"
+      },
+      "key_money_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Inflation Ref"
+      },
+      "key_money_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "amount",
+              "per_uom",
+              "detailed_amount",
+              "detailed_per_uom"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Method"
+      },
+      "key_money_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Period"
+      },
+      "key_money_schedule": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Schedule"
+      },
+      "key_money_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Value"
+      },
+      "lc_amount_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Amount Inflation Ref"
+      },
+      "lc_amount_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Amount Value"
+      },
+      "lc_category_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Category Ref"
+      },
+      "lc_detailed_entries": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/LcDetailedEntry"
+            },
+            "maxItems": 240,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Detailed Entries"
+      },
+      "lc_detailed_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Detailed Inflation Ref"
+      },
+      "lc_detailed_is_per_uom": {
+        "default": true,
+        "title": "Lc Detailed Is Per Uom",
+        "type": "boolean"
+      },
+      "lc_market": {
+        "default": false,
+        "title": "Lc Market",
+        "type": "boolean"
+      },
+      "lc_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "category_ref",
+              "pct_total_rent_over_term",
+              "pct_by_lease_year",
+              "pct_first_month_rent",
+              "per_uom_amount",
+              "fixed_amount",
+              "detailed"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Method"
+      },
+      "lc_pct_by_year_include_abatement": {
+        "default": false,
+        "title": "Lc Pct By Year Include Abatement",
+        "type": "boolean"
+      },
+      "lc_pct_by_year_include_recoveries": {
+        "default": false,
+        "title": "Lc Pct By Year Include Recoveries",
+        "type": "boolean"
+      },
+      "lc_pct_by_year_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct By Year Values"
+      },
+      "lc_pct_first_month_include_abatement": {
+        "default": false,
+        "title": "Lc Pct First Month Include Abatement",
+        "type": "boolean"
+      },
+      "lc_pct_first_month_include_recoveries": {
+        "default": false,
+        "title": "Lc Pct First Month Include Recoveries",
+        "type": "boolean"
+      },
+      "lc_pct_first_month_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct First Month Value"
+      },
+      "lc_pct_total_include_abatement": {
+        "default": false,
+        "title": "Lc Pct Total Include Abatement",
+        "type": "boolean"
+      },
+      "lc_pct_total_include_recoveries": {
+        "default": false,
+        "title": "Lc Pct Total Include Recoveries",
+        "type": "boolean"
+      },
+      "lc_pct_total_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct Total Value"
+      },
+      "lc_per_uom_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Per Uom Inflation Ref"
+      },
+      "lc_per_uom_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Per Uom Value"
+      },
+      "lease_end": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lease End"
+      },
+      "lease_start": {
+        "title": "Lease Start",
+        "type": "string"
+      },
+      "market_leasing_category_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Market Leasing Category Ref"
+      },
+      "notes": {
+        "anyOf": [
+          {
+            "maxLength": 2000,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Notes"
+      },
+      "pct_rent_breakpoint_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "natural_breakpoint",
+              "amount",
+              "per_uom",
+              "detailed_amount",
+              "detailed_per_uom"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Breakpoint Method"
+      },
+      "pct_rent_breakpoint_schedule": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Breakpoint Schedule"
+      },
+      "pct_rent_breakpoint_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Breakpoint Value"
+      },
+      "pct_rent_calc_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "flat_percent_of_sales",
+              "tiered_percent_of_sales"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Calc Method"
+      },
+      "pct_rent_enabled": {
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "detail"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Enabled"
+      },
+      "pct_rent_flat_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Flat Pct"
+      },
+      "pct_rent_sales_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Sales Inflation Ref"
+      },
+      "pct_rent_sales_input_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "amount",
+              "per_uom",
+              "detailed_amount",
+              "detailed_per_uom"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Sales Input Method"
+      },
+      "pct_rent_sales_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Sales Period"
+      },
+      "pct_rent_sales_schedule": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Sales Schedule"
+      },
+      "pct_rent_sales_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Sales Value"
+      },
+      "pct_rent_tiers": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/PctRentTier"
+            },
+            "maxItems": 10,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Rent Tiers"
+      },
+      "recovery_market": {
+        "default": false,
+        "title": "Recovery Market",
+        "type": "boolean"
+      },
+      "recovery_method_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Recovery Method Ref"
+      },
+      "renewal_probability_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "market_default",
+              "constant_hardcode",
+              "picklist_ref"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Probability Method"
+      },
+      "renewal_probability_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Probability Ref"
+      },
+      "renewal_probability_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Probability Value"
+      },
+      "rent_annual_increase": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/GrowthRateConfig"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "rent_changes": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/RentChangeEntry"
+            },
+            "maxItems": 100,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Changes"
+      },
+      "rent_continuation_method": {
+        "default": "none",
+        "enum": [
+          "none",
+          "pct_increase",
+          "dollar_increase"
+        ],
+        "title": "Rent Continuation Method",
+        "type": "string"
+      },
+      "rent_continuation_value": {
+        "default": 0.0,
+        "title": "Rent Continuation Value",
+        "type": "number"
+      },
+      "rent_escalation_market": {
+        "default": false,
+        "title": "Rent Escalation Market",
+        "type": "boolean"
+      },
+      "rent_fixed_step_value": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Fixed Step Value"
+      },
+      "rent_flat_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Flat Value"
+      },
+      "rent_method": {
+        "enum": [
+          "flat_rent",
+          "changing_rent",
+          "pct_annual_increases",
+          "fixed_annual_steps_per_uom"
+        ],
+        "title": "Rent Method",
+        "type": "string"
+      },
+      "rent_pct_of_market": {
+        "anyOf": [
+          {
+            "maximum": 10,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Pct Of Market"
+      },
+      "size": {
+        "minimum": 0,
+        "title": "Size",
+        "type": "number"
+      },
+      "space_type": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Space Type"
+      },
+      "status": {
+        "enum": [
+          "leased_occupied",
+          "vacant_speculative",
+          "leased_not_occupied",
+          "subleased_occupied",
+          "month_to_month"
+        ],
+        "title": "Status",
+        "type": "string"
+      },
+      "suites": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/Suite"
+            },
+            "maxItems": 50,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Suites"
+      },
+      "tenant_id": {
+        "title": "Tenant Id",
+        "type": "string"
+      },
+      "tenant_name": {
+        "title": "Tenant Name",
+        "type": "string"
+      },
+      "term_months": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Term Months"
+      },
+      "thirteenth_month_calendar_month": {
+        "anyOf": [
+          {
+            "maximum": 12,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Thirteenth Month Calendar Month"
+      },
+      "thirteenth_month_enabled": {
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "detail"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Thirteenth Month Enabled"
+      },
+      "thirteenth_month_include_abatement": {
+        "default": false,
+        "title": "Thirteenth Month Include Abatement",
+        "type": "boolean"
+      },
+      "thirteenth_month_include_recoveries": {
+        "default": false,
+        "title": "Thirteenth Month Include Recoveries",
+        "type": "boolean"
+      },
+      "thirteenth_month_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Thirteenth Month Pct"
+      },
+      "ti_amount_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Amount Inflation Ref"
+      },
+      "ti_amount_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Amount Value"
+      },
+      "ti_category_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Category Ref"
+      },
+      "ti_detailed_entries": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/TiDetailedEntry"
+            },
+            "maxItems": 240,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Detailed Entries"
+      },
+      "ti_detailed_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Detailed Inflation Ref"
+      },
+      "ti_detailed_is_per_uom": {
+        "default": true,
+        "title": "Ti Detailed Is Per Uom",
+        "type": "boolean"
+      },
+      "ti_market": {
+        "default": false,
+        "title": "Ti Market",
+        "type": "boolean"
+      },
+      "ti_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "none",
+              "category_ref",
+              "per_uom",
+              "amount",
+              "detailed"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Method"
+      },
+      "ti_per_uom_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Per Uom Inflation Ref"
+      },
+      "ti_per_uom_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Per Uom Value"
+      },
+      "unit": {
+        "title": "Unit",
+        "type": "string"
+      },
+      "upon_expiration": {
+        "anyOf": [
+          {
+            "enum": [
+              "speculative_renewal",
+              "vacate",
+              "renew_at_market",
+              "holdover",
+              "expire"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Upon Expiration"
+      }
+    },
+    "required": [
+      "tenant_id",
+      "unit",
+      "tenant_name",
+      "status",
+      "size",
+      "lease_start",
+      "base_rent_type",
+      "rent_method"
+    ],
+    "title": "Tenant",
+    "type": "object"
+  },
+  "maxItems": 2000,
+  "title": "TenantList",
+  "type": "array"
+}

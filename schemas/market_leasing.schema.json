@@ -1,0 +1,946 @@
+{
+  "$defs": {
+    "MLCAbatementMonthEntry": {
+      "additionalProperties": false,
+      "description": "A single month in a per-month abatement schedule for MLC.",
+      "properties": {
+        "abatement_pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Abatement Pct",
+          "type": "number"
+        },
+        "lease_month": {
+          "exclusiveMinimum": 0,
+          "title": "Lease Month",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_month",
+        "abatement_pct"
+      ],
+      "title": "MLCAbatementMonthEntry",
+      "type": "object"
+    },
+    "RentStepEntry": {
+      "additionalProperties": false,
+      "description": "A single rent step escalation entry.",
+      "properties": {
+        "increase_type": {
+          "enum": [
+            "pct_increase",
+            "fixed_step"
+          ],
+          "title": "Increase Type",
+          "type": "string"
+        },
+        "lease_month": {
+          "exclusiveMinimum": 0,
+          "title": "Lease Month",
+          "type": "integer"
+        },
+        "value": {
+          "minimum": 0,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "lease_month",
+        "increase_type",
+        "value"
+      ],
+      "title": "RentStepEntry",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Market leasing categories used for speculative / renewal leasing.",
+  "items": {
+    "additionalProperties": false,
+    "description": "A market leasing assumption category.",
+    "properties": {
+      "abatement_method": {
+        "enum": [
+          "none",
+          "category_ref",
+          "months_free_at_start",
+          "pct_by_specific_lease_month"
+        ],
+        "title": "Abatement Method",
+        "type": "string"
+      },
+      "abatement_monthly_schedule": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/MLCAbatementMonthEntry"
+            },
+            "maxItems": 25,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Monthly Schedule"
+      },
+      "abatement_months": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Months"
+      },
+      "abatement_months_include_increases": {
+        "default": false,
+        "title": "Abatement Months Include Increases",
+        "type": "boolean"
+      },
+      "abatement_months_include_recoveries": {
+        "default": false,
+        "title": "Abatement Months Include Recoveries",
+        "type": "boolean"
+      },
+      "abatement_pct_include_increases": {
+        "default": false,
+        "title": "Abatement Pct Include Increases",
+        "type": "boolean"
+      },
+      "abatement_pct_include_recoveries": {
+        "default": false,
+        "title": "Abatement Pct Include Recoveries",
+        "type": "boolean"
+      },
+      "abatement_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Ref"
+      },
+      "abatement_renewal_months": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Abatement Renewal Months"
+      },
+      "base_rent_type": {
+        "enum": [
+          "per_uom_year",
+          "per_uom_month",
+          "amount_year",
+          "detailed_yearly"
+        ],
+        "title": "Base Rent Type",
+        "type": "string"
+      },
+      "category_name": {
+        "title": "Category Name",
+        "type": "string"
+      },
+      "downtime_months": {
+        "minimum": 0,
+        "title": "Downtime Months",
+        "type": "number"
+      },
+      "exclude_from_credit_loss": {
+        "default": false,
+        "title": "Exclude From Credit Loss",
+        "type": "boolean"
+      },
+      "exclude_from_general_vacancy": {
+        "default": false,
+        "title": "Exclude From General Vacancy",
+        "type": "boolean"
+      },
+      "key_money_detailed_custom_inflation_rates": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Detailed Custom Inflation Rates"
+      },
+      "key_money_detailed_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Detailed Inflation Ref"
+      },
+      "key_money_detailed_monthly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Detailed Monthly Values"
+      },
+      "key_money_detailed_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Detailed Period"
+      },
+      "key_money_detailed_yearly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Detailed Yearly Values"
+      },
+      "key_money_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Inflation Ref"
+      },
+      "key_money_method": {
+        "enum": [
+          "none",
+          "amount",
+          "amount_per_uom",
+          "detailed_amount",
+          "detailed_per_uom"
+        ],
+        "title": "Key Money Method",
+        "type": "string"
+      },
+      "key_money_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Period"
+      },
+      "key_money_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Key Money Value"
+      },
+      "lc_category_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Category Ref"
+      },
+      "lc_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Inflation Ref"
+      },
+      "lc_method": {
+        "enum": [
+          "none",
+          "category_ref",
+          "pct_total_rent_over_term",
+          "pct_by_lease_year",
+          "pct_first_month_rent",
+          "per_uom_amount",
+          "fixed_amount"
+        ],
+        "title": "Lc Method",
+        "type": "string"
+      },
+      "lc_new_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc New Value"
+      },
+      "lc_pct_by_year_include_abatement": {
+        "default": false,
+        "title": "Lc Pct By Year Include Abatement",
+        "type": "boolean"
+      },
+      "lc_pct_by_year_include_recoveries": {
+        "default": false,
+        "title": "Lc Pct By Year Include Recoveries",
+        "type": "boolean"
+      },
+      "lc_pct_by_year_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct By Year Values"
+      },
+      "lc_pct_first_month_include_abatement": {
+        "default": false,
+        "title": "Lc Pct First Month Include Abatement",
+        "type": "boolean"
+      },
+      "lc_pct_first_month_include_recoveries": {
+        "default": false,
+        "title": "Lc Pct First Month Include Recoveries",
+        "type": "boolean"
+      },
+      "lc_pct_first_month_renewal_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct First Month Renewal Value"
+      },
+      "lc_pct_first_month_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct First Month Value"
+      },
+      "lc_pct_total_include_abatement": {
+        "default": false,
+        "title": "Lc Pct Total Include Abatement",
+        "type": "boolean"
+      },
+      "lc_pct_total_include_recoveries": {
+        "default": false,
+        "title": "Lc Pct Total Include Recoveries",
+        "type": "boolean"
+      },
+      "lc_pct_total_renewal_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct Total Renewal Value"
+      },
+      "lc_pct_total_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Pct Total Value"
+      },
+      "lc_renewal_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Lc Renewal Value"
+      },
+      "market_leasing_category_id": {
+        "title": "Market Leasing Category Id",
+        "type": "string"
+      },
+      "new_rent": {
+        "default": 0,
+        "minimum": 0,
+        "title": "New Rent",
+        "type": "number"
+      },
+      "new_rent_detailed_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "New Rent Detailed Values"
+      },
+      "recovery_method": {
+        "enum": [
+          "none",
+          "recovery_ref"
+        ],
+        "title": "Recovery Method",
+        "type": "string"
+      },
+      "recovery_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Recovery Ref"
+      },
+      "renewal_probability_detailed_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Probability Detailed Values"
+      },
+      "renewal_probability_method": {
+        "enum": [
+          "constant_hardcode",
+          "picklist_ref",
+          "detailed"
+        ],
+        "title": "Renewal Probability Method",
+        "type": "string"
+      },
+      "renewal_probability_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Probability Ref"
+      },
+      "renewal_probability_value": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Probability Value"
+      },
+      "renewal_rent": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Rent"
+      },
+      "renewal_rent_detailed_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Rent Detailed Values"
+      },
+      "renewal_rent_growth_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "growth_method_ref",
+              "constant_annual_hardcode"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Rent Growth Method"
+      },
+      "renewal_rent_growth_rate": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Rent Growth Rate"
+      },
+      "renewal_rent_growth_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Renewal Rent Growth Ref"
+      },
+      "rent_growth_method": {
+        "enum": [
+          "growth_method_ref",
+          "constant_annual_hardcode"
+        ],
+        "title": "Rent Growth Method",
+        "type": "string"
+      },
+      "rent_growth_rate": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Growth Rate"
+      },
+      "rent_growth_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Growth Ref"
+      },
+      "rent_steps_detailed_entries": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/RentStepEntry"
+            },
+            "maxItems": 100,
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Detailed Entries"
+      },
+      "rent_steps_detailed_yearly_pcts": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Detailed Yearly Pcts"
+      },
+      "rent_steps_detailed_yearly_types": {
+        "anyOf": [
+          {
+            "items": {
+              "enum": [
+                "pct_increase",
+                "fixed_step"
+              ],
+              "type": "string"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Detailed Yearly Types"
+      },
+      "rent_steps_enabled": {
+        "default": false,
+        "title": "Rent Steps Enabled",
+        "type": "boolean"
+      },
+      "rent_steps_fixed_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Fixed Amount"
+      },
+      "rent_steps_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "pct_annual_increases",
+              "fixed_annual_steps_per_uom",
+              "detailed_increases"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Method"
+      },
+      "rent_steps_pct_growth_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "growth_method_ref",
+              "constant_hardcode"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Pct Growth Method"
+      },
+      "rent_steps_pct_growth_rate": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Pct Growth Rate"
+      },
+      "rent_steps_pct_growth_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Rent Steps Pct Growth Ref"
+      },
+      "term_months": {
+        "exclusiveMinimum": 0,
+        "title": "Term Months",
+        "type": "integer"
+      },
+      "thirteenth_month_calendar_month": {
+        "anyOf": [
+          {
+            "maximum": 12,
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Thirteenth Month Calendar Month"
+      },
+      "thirteenth_month_enabled": {
+        "enum": [
+          "none",
+          "detail"
+        ],
+        "title": "Thirteenth Month Enabled",
+        "type": "string"
+      },
+      "thirteenth_month_include_abatement": {
+        "default": false,
+        "title": "Thirteenth Month Include Abatement",
+        "type": "boolean"
+      },
+      "thirteenth_month_include_recoveries": {
+        "default": false,
+        "title": "Thirteenth Month Include Recoveries",
+        "type": "boolean"
+      },
+      "thirteenth_month_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Thirteenth Month Pct"
+      },
+      "ti_category_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Category Ref"
+      },
+      "ti_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Inflation Ref"
+      },
+      "ti_method": {
+        "enum": [
+          "none",
+          "category_ref",
+          "per_uom",
+          "amount"
+        ],
+        "title": "Ti Method",
+        "type": "string"
+      },
+      "ti_new_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti New Value"
+      },
+      "ti_renewal_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Ti Renewal Value"
+      },
+      "upon_reversion_category_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Upon Reversion Category Ref"
+      },
+      "upon_reversion_method": {
+        "enum": [
+          "same_category",
+          "other_category_ref"
+        ],
+        "title": "Upon Reversion Method",
+        "type": "string"
+      }
+    },
+    "required": [
+      "market_leasing_category_id",
+      "category_name",
+      "term_months",
+      "downtime_months",
+      "renewal_probability_method",
+      "base_rent_type",
+      "rent_growth_method",
+      "recovery_method",
+      "ti_method",
+      "lc_method",
+      "abatement_method",
+      "key_money_method",
+      "thirteenth_month_enabled",
+      "upon_reversion_method"
+    ],
+    "title": "MarketLeasingCategory",
+    "type": "object"
+  },
+  "maxItems": 100,
+  "title": "MarketLeasingCategoryList",
+  "type": "array"
+}

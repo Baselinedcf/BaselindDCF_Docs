@@ -1,0 +1,282 @@
+{
+  "$defs": {
+    "OtherAdjustment": {
+      "additionalProperties": false,
+      "description": "A single reversion adjustment line.",
+      "properties": {
+        "label": {
+          "default": "",
+          "title": "Label",
+          "type": "string"
+        },
+        "method": {
+          "default": "amount",
+          "enum": [
+            "amount",
+            "pct_of_sale_price"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "value": {
+          "default": 0.0,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "title": "OtherAdjustment",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Singleton resale and present value configuration.",
+  "properties": {
+    "cap_excluded_income": {
+      "default": true,
+      "title": "Cap Excluded Income",
+      "type": "boolean"
+    },
+    "cost_of_sale_pct": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Cost Of Sale Pct",
+      "type": "number"
+    },
+    "deduct_forward_capex": {
+      "default": false,
+      "title": "Deduct Forward Capex",
+      "type": "boolean"
+    },
+    "deduct_forward_lc": {
+      "default": false,
+      "title": "Deduct Forward Lc",
+      "type": "boolean"
+    },
+    "deduct_forward_ti": {
+      "default": false,
+      "title": "Deduct Forward Ti",
+      "type": "boolean"
+    },
+    "deduct_forward_turnover_costs": {
+      "default": false,
+      "title": "Deduct Forward Turnover Costs",
+      "type": "boolean"
+    },
+    "discount_rate": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Discount Rate",
+      "type": "number"
+    },
+    "excluded_income_cap_rate": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Cap rate for separately capitalized excluded income. When None, uses terminal_cap_rate.",
+      "title": "Excluded Income Cap Rate"
+    },
+    "grossup_addback_free_rent": {
+      "default": false,
+      "title": "Grossup Addback Free Rent",
+      "type": "boolean"
+    },
+    "grossup_occupancy": {
+      "default": false,
+      "title": "Grossup Occupancy",
+      "type": "boolean"
+    },
+    "grossup_occupancy_pct": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Grossup Occupancy Pct"
+    },
+    "include_land_income": {
+      "default": false,
+      "title": "Include Land Income",
+      "type": "boolean"
+    },
+    "ios_discount_rate": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ios Discount Rate"
+    },
+    "ios_land_at_reversion": {
+      "default": false,
+      "title": "Ios Land At Reversion",
+      "type": "boolean"
+    },
+    "ios_land_growth_rate": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ios Land Growth Rate"
+    },
+    "ios_land_value": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ios Land Value"
+    },
+    "other_adjustment_enabled": {
+      "default": false,
+      "title": "Other Adjustment Enabled",
+      "type": "boolean"
+    },
+    "other_adjustment_method": {
+      "anyOf": [
+        {
+          "enum": [
+            "amount",
+            "pct_of_sale_price"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Other Adjustment Method"
+    },
+    "other_adjustment_value": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Other Adjustment Value"
+    },
+    "other_adjustments": {
+      "items": {
+        "$ref": "#/$defs/OtherAdjustment"
+      },
+      "title": "Other Adjustments",
+      "type": "array"
+    },
+    "reversion_method": {
+      "enum": [
+        "capitalize_forward_noi",
+        "capitalize_sale_year_noi",
+        "capitalize_forward_cfbd",
+        "capitalize_sale_year_cfbd",
+        "input_purchase_price"
+      ],
+      "title": "Reversion Method",
+      "type": "string"
+    },
+    "sale_date_method": {
+      "enum": [
+        "end_of_holding_period",
+        "custom_month_year"
+      ],
+      "title": "Sale Date Method",
+      "type": "string"
+    },
+    "sale_date_month": {
+      "anyOf": [
+        {
+          "maximum": 12,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sale Date Month"
+    },
+    "sale_date_year": {
+      "anyOf": [
+        {
+          "minimum": 1900,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sale Date Year"
+    },
+    "sale_price": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sale Price"
+    },
+    "terminal_cap_rate": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Terminal Cap Rate"
+    }
+  },
+  "required": [
+    "sale_date_method",
+    "discount_rate",
+    "reversion_method",
+    "cost_of_sale_pct"
+  ],
+  "title": "ResalePV",
+  "type": "object"
+}

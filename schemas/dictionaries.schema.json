@@ -1,0 +1,569 @@
+{
+  "$defs": {
+    "AbatementMonthValue": {
+      "additionalProperties": false,
+      "description": "A single month entry in a rent abatement profile.",
+      "properties": {
+        "abatement_pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Abatement Pct",
+          "type": "number"
+        },
+        "lease_month": {
+          "minimum": 1,
+          "title": "Lease Month",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "lease_month",
+        "abatement_pct"
+      ],
+      "title": "AbatementMonthValue",
+      "type": "object"
+    },
+    "AlternatePropertyArea": {
+      "additionalProperties": false,
+      "description": "User-defined alternate area measurement.",
+      "properties": {
+        "area": {
+          "minimum": 0,
+          "title": "Area",
+          "type": "number"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "area"
+      ],
+      "title": "AlternatePropertyArea",
+      "type": "object"
+    },
+    "ExpenseGroup": {
+      "additionalProperties": false,
+      "description": "Named collection of expense lines with per-line % recoverable overrides.",
+      "properties": {
+        "admin_fee_pct": {
+          "default": 0.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Admin Fee Pct",
+          "type": "number"
+        },
+        "entries": {
+          "items": {
+            "$ref": "#/$defs/ExpenseGroupEntry"
+          },
+          "title": "Entries",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "ExpenseGroup",
+      "type": "object"
+    },
+    "ExpenseGroupEntry": {
+      "additionalProperties": false,
+      "description": "A single expense line within an expense group.",
+      "properties": {
+        "expense_ref": {
+          "title": "Expense Ref",
+          "type": "string"
+        },
+        "pct_recoverable": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Pct Recoverable",
+          "type": "number"
+        }
+      },
+      "required": [
+        "expense_ref"
+      ],
+      "title": "ExpenseGroupEntry",
+      "type": "object"
+    },
+    "GrowthMethod": {
+      "additionalProperties": false,
+      "description": "User-defined inflation/growth rate profile.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "method": {
+          "enum": [
+            "constant",
+            "fluctuating",
+            "custom_monthly"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rate"
+        },
+        "rates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rates"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "method"
+      ],
+      "title": "GrowthMethod",
+      "type": "object"
+    },
+    "LCCategory": {
+      "additionalProperties": false,
+      "description": "User-defined leasing commission category.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "include_expense_recoveries": {
+          "default": false,
+          "title": "Include Expense Recoveries",
+          "type": "boolean"
+        },
+        "include_rent_abatement": {
+          "default": false,
+          "title": "Include Rent Abatement",
+          "type": "boolean"
+        },
+        "inflation_method_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflation Method Ref"
+        },
+        "method": {
+          "enum": [
+            "pct_total_rent_over_term",
+            "pct_by_lease_year",
+            "pct_first_month_rent",
+            "per_uom_amount",
+            "fixed_amount"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "renewal_values": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Values"
+        },
+        "values": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Values"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "method",
+        "values"
+      ],
+      "title": "LCCategory",
+      "type": "object"
+    },
+    "RenewalProbability": {
+      "additionalProperties": false,
+      "description": "User-defined renewal probability profile.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "method": {
+          "enum": [
+            "constant_annual",
+            "fluctuating_annual",
+            "custom_monthly_intervals"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "percentages": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            }
+          ],
+          "title": "Percentages"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "method",
+        "percentages"
+      ],
+      "title": "RenewalProbability",
+      "type": "object"
+    },
+    "RentAbatement": {
+      "additionalProperties": false,
+      "description": "User-defined rent abatement profile.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "include_expense_recoveries": {
+          "default": false,
+          "title": "Include Expense Recoveries",
+          "type": "boolean"
+        },
+        "include_rent_increases": {
+          "default": false,
+          "title": "Include Rent Increases",
+          "type": "boolean"
+        },
+        "method": {
+          "enum": [
+            "months_free_at_start",
+            "pct_by_specific_lease_month"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "monthly_values": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/AbatementMonthValue"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Monthly Values"
+        },
+        "months": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Months"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "renewal_monthly_values": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/AbatementMonthValue"
+              },
+              "maxItems": 25,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Monthly Values"
+        },
+        "renewal_months": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Months"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "method"
+      ],
+      "title": "RentAbatement",
+      "type": "object"
+    },
+    "TICategory": {
+      "additionalProperties": false,
+      "description": "User-defined tenant improvement category.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "inflation_method_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflation Method Ref"
+        },
+        "method": {
+          "enum": [
+            "per_uom_amount",
+            "fixed_amount"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "new_value": {
+          "minimum": 0,
+          "title": "New Value",
+          "type": "number"
+        },
+        "renewal_value": {
+          "minimum": 0,
+          "title": "Renewal Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "method",
+        "new_value",
+        "renewal_value"
+      ],
+      "title": "TICategory",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Container for all user-defined picklist definitions.",
+  "properties": {
+    "alternate_property_areas": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/AlternatePropertyArea"
+          },
+          "maxItems": 10,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Alternate Property Areas"
+    },
+    "expense_groups": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/ExpenseGroup"
+          },
+          "maxItems": 100,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expense Groups"
+    },
+    "growth_methods": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/GrowthMethod"
+          },
+          "maxItems": 10,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Growth Methods"
+    },
+    "lc_categories": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/LCCategory"
+          },
+          "maxItems": 100,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lc Categories"
+    },
+    "renewal_probabilities": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/RenewalProbability"
+          },
+          "maxItems": 10,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Renewal Probabilities"
+    },
+    "rent_abatements": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/RentAbatement"
+          },
+          "maxItems": 100,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rent Abatements"
+    },
+    "ti_categories": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/TICategory"
+          },
+          "maxItems": 100,
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ti Categories"
+    }
+  },
+  "title": "Dictionaries",
+  "type": "object"
+}

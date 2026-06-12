@@ -1,0 +1,425 @@
+{
+  "$defs": {
+    "PctLineItemRefEntry": {
+      "additionalProperties": false,
+      "description": "A reference to another line item with a percentage.",
+      "properties": {
+        "by_year": {
+          "default": false,
+          "title": "By Year",
+          "type": "boolean"
+        },
+        "flat_pct": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Flat Pct",
+          "type": "number"
+        },
+        "ref_key": {
+          "title": "Ref Key",
+          "type": "string"
+        },
+        "year_pcts": {
+          "anyOf": [
+            {
+              "items": {
+                "maximum": 1,
+                "minimum": -1,
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year Pcts"
+        }
+      },
+      "required": [
+        "ref_key",
+        "flat_pct"
+      ],
+      "title": "PctLineItemRefEntry",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Operating expense line items.",
+  "items": {
+    "additionalProperties": false,
+    "description": "A single operating expense line item.",
+    "properties": {
+      "account_code": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Account Code"
+      },
+      "amount_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Amount Inflation Ref"
+      },
+      "amount_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Amount Period"
+      },
+      "amount_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Amount Value"
+      },
+      "detailed_custom_inflation_rates": {
+        "anyOf": [
+          {
+            "items": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Custom Inflation Rates"
+      },
+      "detailed_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Inflation Ref"
+      },
+      "detailed_monthly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Monthly Values"
+      },
+      "detailed_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Period"
+      },
+      "detailed_yearly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Yearly Values"
+      },
+      "expense_line_id": {
+        "title": "Expense Line Id",
+        "type": "string"
+      },
+      "impacts_cash_flow": {
+        "default": true,
+        "title": "Impacts Cash Flow",
+        "type": "boolean"
+      },
+      "input_method": {
+        "enum": [
+          "amount",
+          "amount_per_uom",
+          "amount_per_unit",
+          "detailed_amount",
+          "detailed_per_uom",
+          "detailed_per_unit",
+          "pct_of_line_item",
+          "prop_13a_resets_on_sale",
+          "reassessment"
+        ],
+        "title": "Input Method",
+        "type": "string"
+      },
+      "line_item_name": {
+        "title": "Line Item Name",
+        "type": "string"
+      },
+      "notes": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Notes"
+      },
+      "occupancy_type": {
+        "enum": [
+          "fixed",
+          "variable_by_occupancy"
+        ],
+        "title": "Occupancy Type",
+        "type": "string"
+      },
+      "pct_line_item_refs": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/PctLineItemRefEntry"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Line Item Refs"
+      },
+      "pct_recoverable": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Recoverable"
+      },
+      "prop13a_assume_sale_at_start": {
+        "default": true,
+        "title": "Prop13A Assume Sale At Start",
+        "type": "boolean"
+      },
+      "prop13a_parcel_tax_method": {
+        "anyOf": [
+          {
+            "enum": [
+              "amount",
+              "amount_per_uom",
+              "detailed_amount",
+              "detailed_per_uom"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Prop13A Parcel Tax Method"
+      },
+      "prop13a_special_assessments": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Annual special assessments dollar amount for Prop 13A.",
+        "title": "Prop13A Special Assessments"
+      },
+      "prop13a_special_assessments_growth_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Growth method ref for Prop 13A special assessments.",
+        "title": "Prop13A Special Assessments Growth Ref"
+      },
+      "prop13a_tax_rate": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Prop13A Tax Rate"
+      },
+      "reassess_at_reversion": {
+        "default": false,
+        "description": "If True, reassess property value at reversion/sale.",
+        "title": "Reassess At Reversion",
+        "type": "boolean"
+      },
+      "reassessment_millage_rate": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Tax rate applied to assessed value (millage rate as decimal).",
+        "title": "Reassessment Millage Rate"
+      },
+      "reassessment_ratio": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Ratio of property value used as assessed value (e.g. 0.70 = 70%).",
+        "title": "Reassessment Ratio"
+      },
+      "reassessment_special_assessments": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Annual special assessments dollar amount.",
+        "title": "Reassessment Special Assessments"
+      },
+      "reassessment_special_assessments_growth_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Growth method ref for special assessments (independent of tax growth).",
+        "title": "Reassessment Special Assessments Growth Ref"
+      },
+      "reassessment_tax_growth_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Growth method ref for the calculated tax amount.",
+        "title": "Reassessment Tax Growth Ref"
+      },
+      "variable_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Variable Pct"
+      }
+    },
+    "required": [
+      "expense_line_id",
+      "line_item_name",
+      "occupancy_type",
+      "input_method"
+    ],
+    "title": "ExpenseLine",
+    "type": "object"
+  },
+  "maxItems": 100,
+  "title": "ExpenseLineList",
+  "type": "array"
+}

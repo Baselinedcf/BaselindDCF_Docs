@@ -1,0 +1,468 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Singleton project-level configuration.",
+  "properties": {
+    "analysis_start_month": {
+      "maximum": 12,
+      "minimum": 1,
+      "title": "Analysis Start Month",
+      "type": "integer"
+    },
+    "analysis_start_year": {
+      "minimum": 1900,
+      "title": "Analysis Start Year",
+      "type": "integer"
+    },
+    "area_unit": {
+      "enum": [
+        "rooms",
+        "units",
+        "beds",
+        "sf",
+        "m2",
+        "custom"
+      ],
+      "title": "Area Unit",
+      "type": "string"
+    },
+    "area_unit_abbrev": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Area Unit Abbrev"
+    },
+    "area_unit_label": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Area Unit Label"
+    },
+    "baseline_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Baseline Id"
+    },
+    "city": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "City"
+    },
+    "country": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Z]{2}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Country"
+    },
+    "credit_loss_base_method": {
+      "default": "rental_revenue",
+      "enum": [
+        "rental_revenue",
+        "total_tenant_revenue",
+        "potential_gross_revenue",
+        "scheduled_rent"
+      ],
+      "title": "Credit Loss Base Method",
+      "type": "string"
+    },
+    "credit_loss_includes_recoveries": {
+      "default": false,
+      "title": "Credit Loss Includes Recoveries",
+      "type": "boolean"
+    },
+    "credit_loss_method": {
+      "enum": [
+        "constant_annual",
+        "fluctuating_annual",
+        "custom_monthly_intervals"
+      ],
+      "title": "Credit Loss Method",
+      "type": "string"
+    },
+    "credit_loss_rate": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Credit Loss Rate"
+    },
+    "credit_loss_rates": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Credit Loss Rates"
+    },
+    "currency": {
+      "pattern": "^[A-Z]{3}$",
+      "title": "Currency",
+      "type": "string"
+    },
+    "currency_symbol": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Currency Symbol"
+    },
+    "default_inflation_method": {
+      "enum": [
+        "constant",
+        "fluctuating",
+        "custom_monthly"
+      ],
+      "title": "Default Inflation Method",
+      "type": "string"
+    },
+    "default_inflation_rate": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Default Inflation Rate"
+    },
+    "default_inflation_rates": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Default Inflation Rates"
+    },
+    "discounting_frequency": {
+      "default": "annual",
+      "enum": [
+        "annual",
+        "monthly"
+      ],
+      "title": "Discounting Frequency",
+      "type": "string"
+    },
+    "expense_recovery_inflation_method": {
+      "enum": [
+        "fiscal_recovery_fiscal_inflation",
+        "calendar_recovery_calendar_inflation",
+        "calendar_recovery_fiscal_inflation",
+        "fiscal_recovery_calendar_inflation"
+      ],
+      "title": "Expense Recovery Inflation Method",
+      "type": "string"
+    },
+    "file_id": {
+      "title": "File Id",
+      "type": "string"
+    },
+    "has_area_remeasurement_changes": {
+      "default": false,
+      "title": "Has Area Remeasurement Changes",
+      "type": "boolean"
+    },
+    "has_unit_rental_cl_override": {
+      "default": false,
+      "title": "Has Unit Rental Cl Override",
+      "type": "boolean"
+    },
+    "has_unit_rental_gv_override": {
+      "default": false,
+      "title": "Has Unit Rental Gv Override",
+      "type": "boolean"
+    },
+    "holding_period_months": {
+      "default": 0,
+      "maximum": 11,
+      "minimum": 0,
+      "title": "Holding Period Months",
+      "type": "integer"
+    },
+    "holding_period_years": {
+      "minimum": 1,
+      "title": "Holding Period Years",
+      "type": "integer"
+    },
+    "income_expense_start_method": {
+      "enum": [
+        "analysis_start",
+        "custom_start",
+        "calendar_year_prorated"
+      ],
+      "title": "Income Expense Start Method",
+      "type": "string"
+    },
+    "income_expense_start_month": {
+      "anyOf": [
+        {
+          "maximum": 12,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Income Expense Start Month"
+    },
+    "income_expense_start_year": {
+      "anyOf": [
+        {
+          "minimum": 1900,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Income Expense Start Year"
+    },
+    "inflation_frequency": {
+      "default": "annual",
+      "enum": [
+        "annual",
+        "monthly"
+      ],
+      "title": "Inflation Frequency",
+      "type": "string"
+    },
+    "number_of_units": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Number Of Units"
+    },
+    "postal_code": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Postal Code"
+    },
+    "property_area": {
+      "minimum": 0,
+      "title": "Property Area",
+      "type": "number"
+    },
+    "property_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Property Id"
+    },
+    "property_name": {
+      "title": "Property Name",
+      "type": "string"
+    },
+    "property_type": {
+      "enum": [
+        "office",
+        "industrial",
+        "industrial_outdoor_storage",
+        "retail",
+        "apartment",
+        "senior_housing",
+        "manufactured_housing",
+        "sfr",
+        "student_housing",
+        "self_storage",
+        "hotel",
+        "resort",
+        "extended_stay"
+      ],
+      "title": "Property Type",
+      "type": "string"
+    },
+    "state": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "State"
+    },
+    "street_address": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Street Address"
+    },
+    "vacancy_base_method": {
+      "default": "total_tenant_revenue",
+      "enum": [
+        "rental_revenue",
+        "total_tenant_revenue",
+        "potential_gross_revenue"
+      ],
+      "title": "Vacancy Base Method",
+      "type": "string"
+    },
+    "vacancy_frequency": {
+      "default": "monthly",
+      "enum": [
+        "annual",
+        "monthly"
+      ],
+      "title": "Vacancy Frequency",
+      "type": "string"
+    },
+    "vacancy_method": {
+      "enum": [
+        "full_amount_every_year",
+        "reduce_by_turnover_vacancy"
+      ],
+      "title": "Vacancy Method",
+      "type": "string"
+    },
+    "vacancy_rate": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Vacancy Rate"
+    },
+    "vacancy_rate_method": {
+      "enum": [
+        "constant",
+        "fluctuating",
+        "custom_monthly"
+      ],
+      "title": "Vacancy Rate Method",
+      "type": "string"
+    },
+    "vacancy_rates": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Vacancy Rates"
+    }
+  },
+  "required": [
+    "file_id",
+    "property_type",
+    "property_name",
+    "currency",
+    "area_unit",
+    "property_area",
+    "analysis_start_month",
+    "analysis_start_year",
+    "holding_period_years",
+    "income_expense_start_method",
+    "expense_recovery_inflation_method",
+    "default_inflation_method",
+    "vacancy_method",
+    "vacancy_rate_method",
+    "credit_loss_method"
+  ],
+  "title": "Project",
+  "type": "object"
+}

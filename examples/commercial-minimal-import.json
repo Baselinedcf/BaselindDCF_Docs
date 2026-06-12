@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "file_id": "demo-commercial-001",
+    "property_type": "office",
+    "property_name": "Demo Office Property",
+    "currency": "USD",
+    "area_unit": "sf",
+    "property_area": 30000,
+    "analysis_start_month": 1,
+    "analysis_start_year": 2026,
+    "holding_period_years": 5,
+    "holding_period_months": 0,
+    "income_expense_start_method": "analysis_start",
+    "expense_recovery_inflation_method": "fiscal_recovery_fiscal_inflation",
+    "default_inflation_method": "constant",
+    "default_inflation_rate": 0.03,
+    "vacancy_method": "reduce_by_turnover_vacancy",
+    "vacancy_rate_method": "constant",
+    "vacancy_rate": 0.05,
+    "credit_loss_method": "constant_annual",
+    "credit_loss_rate": 0.01
+  },
+  "tenants": [
+    {
+      "tenant_id": "tenant-001",
+      "unit": "Suite 100",
+      "tenant_name": "Example Tenant",
+      "status": "leased_occupied",
+      "size": 12000,
+      "lease_start": "2026-01-01",
+      "term_months": 60,
+      "base_rent_type": "per_uom_year",
+      "rent_method": "flat_rent",
+      "rent_flat_value": 32,
+      "upon_expiration": "renew_at_market",
+      "market_leasing_category_ref": "mlc-office-standard"
+    }
+  ],
+  "market_leasing": [
+    {
+      "market_leasing_category_id": "mlc-office-standard",
+      "category_name": "Office Standard",
+      "term_months": 60,
+      "downtime_months": 4,
+      "renewal_probability_method": "constant_hardcode",
+      "renewal_probability_value": 0.7,
+      "base_rent_type": "per_uom_year",
+      "new_rent": 34,
+      "renewal_rent": 32,
+      "rent_growth_method": "constant_annual_hardcode",
+      "rent_growth_rate": 0.03,
+      "recovery_method": "none",
+      "ti_method": "per_uom",
+      "ti_new_value": 5,
+      "ti_renewal_value": 2,
+      "lc_method": "pct_total_rent_over_term",
+      "lc_pct_total_value": 0.04,
+      "lc_pct_total_renewal_value": 0.02,
+      "abatement_method": "none",
+      "key_money_method": "none",
+      "thirteenth_month_enabled": "none",
+      "upon_reversion_method": "same_category"
+    }
+  ],
+  "recoveries": [],
+  "income": [],
+  "expenses": [
+    {
+      "expense_line_id": "operating-expenses",
+      "line_item_name": "Operating Expenses",
+      "occupancy_type": "fixed",
+      "input_method": "amount",
+      "amount_value": 150000,
+      "amount_period": "per_year"
+    }
+  ],
+  "capex": [],
+  "debt": [],
+  "resale_pv": {
+    "sale_date_method": "end_of_holding_period",
+    "discount_rate": 0.085,
+    "reversion_method": "capitalize_forward_noi",
+    "terminal_cap_rate": 0.065,
+    "cost_of_sale_pct": 0.02
+  }
+}
+

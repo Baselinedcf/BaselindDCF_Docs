@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "project": {
+    "file_id": "demo-hotel-001",
+    "property_type": "hotel",
+    "property_name": "Demo Hotel Property",
+    "currency": "USD",
+    "area_unit": "rooms",
+    "property_area": 120,
+    "analysis_start_month": 1,
+    "analysis_start_year": 2026,
+    "holding_period_years": 5,
+    "holding_period_months": 0,
+    "income_expense_start_method": "analysis_start",
+    "expense_recovery_inflation_method": "fiscal_recovery_fiscal_inflation",
+    "default_inflation_method": "constant",
+    "default_inflation_rate": 0.03,
+    "vacancy_method": "full_amount_every_year",
+    "vacancy_rate_method": "constant",
+    "vacancy_rate": 0,
+    "credit_loss_method": "constant_annual",
+    "credit_loss_rate": 0
+  },
+  "hotel": {
+    "rooms": 120,
+    "hotel_type": "select_service",
+    "str_scale": "upscale",
+    "assumptions": {
+      "occupancy_by_year": [0.7, 0.72, 0.74, 0.74, 0.74, 0.74],
+      "adr_by_year": [225, 232, 239, 246, 253, 261],
+      "inflation_rate": 0.03
+    }
+  },
+  "income": [],
+  "expenses": [],
+  "capex": [],
+  "debt": [],
+  "resale_pv": {
+    "sale_date_method": "end_of_holding_period",
+    "discount_rate": 0.09,
+    "reversion_method": "capitalize_forward_noi",
+    "terminal_cap_rate": 0.075,
+    "cost_of_sale_pct": 0.02
+  }
+}

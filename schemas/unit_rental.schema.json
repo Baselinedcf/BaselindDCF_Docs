@@ -1,0 +1,1484 @@
+{
+  "$defs": {
+    "ApartmentUnitType": {
+      "description": "Unit type for apartments, senior housing, manufactured housing, SFR.\n\nUses renewal probability + downtime turnover model with TI/LC.",
+      "properties": {
+        "concession_allowance_monthly": {
+          "default": false,
+          "title": "Concession Allowance Monthly",
+          "type": "boolean"
+        },
+        "concession_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Concession Ref"
+        },
+        "credit_loss_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "constant_annual",
+                "fluctuating_annual",
+                "custom_monthly_intervals"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Method"
+        },
+        "credit_loss_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Rate"
+        },
+        "credit_loss_rates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Rates"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "downtime_months": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Downtime Months",
+          "type": "number"
+        },
+        "exclude_from_credit_loss": {
+          "default": false,
+          "title": "Exclude From Credit Loss",
+          "type": "boolean"
+        },
+        "in_place_rent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RentAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "in_place_rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "In Place Rent Growth Rate"
+        },
+        "in_place_rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "In Place Rent Growth Ref"
+        },
+        "lc_category_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lc Category Ref"
+        },
+        "lease_up": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/LeaseUpEntry"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lease Up"
+        },
+        "market_rent": {
+          "$ref": "#/$defs/RentAmount"
+        },
+        "num_units": {
+          "minimum": 1,
+          "title": "Num Units",
+          "type": "integer"
+        },
+        "remaining_lease_term": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Remaining Lease Term"
+        },
+        "renewal_probability_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Probability Rate"
+        },
+        "renewal_probability_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Probability Ref"
+        },
+        "renewal_rent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RentAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "renewal_rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Rent Growth Rate"
+        },
+        "renewal_rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Rent Growth Ref"
+        },
+        "renovation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RenovationConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rent Growth Rate"
+        },
+        "rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rent Growth Ref"
+        },
+        "standard_lease_term": {
+          "default": 12,
+          "minimum": 1,
+          "title": "Standard Lease Term",
+          "type": "integer"
+        },
+        "subtype": {
+          "const": "apartment",
+          "default": "apartment",
+          "title": "Subtype",
+          "type": "string"
+        },
+        "turnover_cost": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TurnoverCost"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit_size": {
+          "minimum": 0,
+          "title": "Unit Size",
+          "type": "number"
+        },
+        "unit_type_id": {
+          "title": "Unit Type Id",
+          "type": "string"
+        },
+        "units_vacant": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Units Vacant",
+          "type": "integer"
+        },
+        "vacancy_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rate"
+        },
+        "vacancy_rate_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "constant",
+                "fluctuating",
+                "custom_monthly"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rate Method"
+        },
+        "vacancy_rates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rates"
+        }
+      },
+      "required": [
+        "unit_type_id",
+        "num_units",
+        "unit_size",
+        "market_rent"
+      ],
+      "title": "ApartmentUnitType",
+      "type": "object"
+    },
+    "ECRIEntry": {
+      "additionalProperties": false,
+      "description": "A single ECRI (Existing Customer Rent Increase) schedule entry.",
+      "properties": {
+        "month": {
+          "description": "Month of tenancy when increase occurs",
+          "minimum": 1,
+          "title": "Month",
+          "type": "integer"
+        },
+        "pct_increase": {
+          "description": "Percentage increase [0,1]",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Pct Increase",
+          "type": "number"
+        }
+      },
+      "required": [
+        "month",
+        "pct_increase"
+      ],
+      "title": "ECRIEntry",
+      "type": "object"
+    },
+    "LeaseUpEntry": {
+      "additionalProperties": false,
+      "description": "A single lease-up schedule entry: month + units leased.",
+      "properties": {
+        "month": {
+          "minimum": 1,
+          "title": "Month",
+          "type": "integer"
+        },
+        "units_leased": {
+          "minimum": 0,
+          "title": "Units Leased",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "month",
+        "units_leased"
+      ],
+      "title": "LeaseUpEntry",
+      "type": "object"
+    },
+    "RenovationConfig": {
+      "additionalProperties": false,
+      "description": "Unit renovation with rent premium configuration.",
+      "properties": {
+        "below_noi": {
+          "default": true,
+          "title": "Below Noi",
+          "type": "boolean"
+        },
+        "cost_inflation_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Inflation Ref"
+        },
+        "cost_method": {
+          "default": "amount_per_unit",
+          "enum": [
+            "amount_per_unit",
+            "amount_per_uom"
+          ],
+          "title": "Cost Method",
+          "type": "string"
+        },
+        "cost_value": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Cost Value",
+          "type": "number"
+        },
+        "mode": {
+          "default": "natural",
+          "enum": [
+            "natural",
+            "scheduled"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "premium_inflation_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Premium Inflation Ref"
+        },
+        "premium_method": {
+          "default": "amount_per_unit",
+          "enum": [
+            "amount_per_unit",
+            "amount_per_uom",
+            "pct_of_market_rent"
+          ],
+          "title": "Premium Method",
+          "type": "string"
+        },
+        "premium_value": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Premium Value",
+          "type": "number"
+        },
+        "schedule": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Schedule"
+        },
+        "schedule_mode": {
+          "default": "annual",
+          "enum": [
+            "annual",
+            "monthly"
+          ],
+          "title": "Schedule Mode",
+          "type": "string"
+        },
+        "target_units": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Units"
+        }
+      },
+      "title": "RenovationConfig",
+      "type": "object"
+    },
+    "RentAmount": {
+      "additionalProperties": false,
+      "description": "Rent specification with method and value.",
+      "properties": {
+        "method": {
+          "default": "monthly_per_unit",
+          "enum": [
+            "monthly_per_unit",
+            "monthly_per_uom",
+            "annual_per_unit",
+            "annual_per_uom",
+            "monthly_per_bed",
+            "annual_per_bed"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "value": {
+          "minimum": 0,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "RentAmount",
+      "type": "object"
+    },
+    "RevenueScheduleEntry": {
+      "additionalProperties": false,
+      "description": "One row of a self-storage revenue-management schedule.",
+      "properties": {
+        "discount_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Discount Pct"
+        },
+        "ecri_frequency_months": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ecri Frequency Months"
+        },
+        "ecri_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ecri Pct"
+        },
+        "monthly_churn_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Monthly Churn Pct"
+        },
+        "period": {
+          "minimum": 1,
+          "title": "Period",
+          "type": "integer"
+        },
+        "period_type": {
+          "default": "year",
+          "enum": [
+            "month",
+            "year"
+          ],
+          "title": "Period Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "period"
+      ],
+      "title": "RevenueScheduleEntry",
+      "type": "object"
+    },
+    "SelfStorageUnitType": {
+      "additionalProperties": false,
+      "description": "Unit type for self-storage properties.\n\nUses churn-based turnover (no renewal probability, no downtime, no TI/LC).\nTwo rent levels: street rent (new move-ins) and in-place rent (existing).\nECRI provides periodic rent increases to existing tenants.\n\nAll schedule fields follow the ref-or-hardcode pattern:\n- If a ``_ref`` is provided, look up the GrowthMethod in dictionaries\n  (supports constant, fluctuating, custom_monthly)\n- Otherwise fall back to the hardcoded constant value",
+      "properties": {
+        "concession_allowance_monthly": {
+          "default": false,
+          "title": "Concession Allowance Monthly",
+          "type": "boolean"
+        },
+        "concession_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Concession Ref"
+        },
+        "credit_loss_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "constant_annual",
+                "fluctuating_annual",
+                "custom_monthly_intervals"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Method"
+        },
+        "credit_loss_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Rate"
+        },
+        "credit_loss_rates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Rates"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "discount_pct": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Discount Pct",
+          "type": "number"
+        },
+        "discount_pct_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Discount Pct Ref"
+        },
+        "ecri_frequency_months": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ecri Frequency Months"
+        },
+        "ecri_frequency_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ecri Frequency Ref"
+        },
+        "ecri_mode": {
+          "default": "constant",
+          "enum": [
+            "constant",
+            "detailed"
+          ],
+          "title": "Ecri Mode",
+          "type": "string"
+        },
+        "ecri_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ecri Pct"
+        },
+        "ecri_pct_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ecri Pct Ref"
+        },
+        "ecri_schedule": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/ECRIEntry"
+              },
+              "maxItems": 200,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ecri Schedule"
+        },
+        "exclude_from_credit_loss": {
+          "default": false,
+          "title": "Exclude From Credit Loss",
+          "type": "boolean"
+        },
+        "in_place_rent": {
+          "$ref": "#/$defs/RentAmount"
+        },
+        "in_place_rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "In Place Rent Growth Rate"
+        },
+        "in_place_rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "In Place Rent Growth Ref"
+        },
+        "initial_lease_term": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Initial Lease Term",
+          "type": "integer"
+        },
+        "lease_up": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/LeaseUpEntry"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lease Up"
+        },
+        "monthly_churn_pct": {
+          "default": 0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Monthly Churn Pct",
+          "type": "number"
+        },
+        "monthly_churn_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Monthly Churn Ref"
+        },
+        "num_units": {
+          "minimum": 1,
+          "title": "Num Units",
+          "type": "integer"
+        },
+        "revenue_schedule": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/RevenueScheduleEntry"
+              },
+              "maxItems": 200,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Per-period overrides for churn/ECRI/discount. Last entry carries forward. Only used when ecri_mode='detailed'.",
+          "title": "Revenue Schedule"
+        },
+        "street_rent": {
+          "$ref": "#/$defs/RentAmount"
+        },
+        "street_rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Street Rent Growth Rate"
+        },
+        "street_rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Street Rent Growth Ref"
+        },
+        "subtype": {
+          "const": "self_storage",
+          "default": "self_storage",
+          "title": "Subtype",
+          "type": "string"
+        },
+        "unit_size": {
+          "minimum": 0,
+          "title": "Unit Size",
+          "type": "number"
+        },
+        "unit_type_id": {
+          "title": "Unit Type Id",
+          "type": "string"
+        },
+        "units_vacant": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Units Vacant",
+          "type": "integer"
+        },
+        "vacancy_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rate"
+        },
+        "vacancy_rate_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "constant",
+                "fluctuating",
+                "custom_monthly"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rate Method"
+        },
+        "vacancy_rates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rates"
+        }
+      },
+      "required": [
+        "unit_type_id",
+        "num_units",
+        "unit_size",
+        "street_rent",
+        "in_place_rent"
+      ],
+      "title": "SelfStorageUnitType",
+      "type": "object"
+    },
+    "StudentHousingUnitType": {
+      "description": "Unit type for student housing — per-bed pricing, academic year leases.\n\nSimilar to apartments but occupancy/rent tracked at the bed level.\nEach physical unit contains ``beds_per_unit`` beds.",
+      "properties": {
+        "beds_per_unit": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Beds Per Unit",
+          "type": "integer"
+        },
+        "concession_allowance_monthly": {
+          "default": false,
+          "title": "Concession Allowance Monthly",
+          "type": "boolean"
+        },
+        "concession_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Concession Ref"
+        },
+        "credit_loss_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "constant_annual",
+                "fluctuating_annual",
+                "custom_monthly_intervals"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Method"
+        },
+        "credit_loss_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Rate"
+        },
+        "credit_loss_rates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Credit Loss Rates"
+        },
+        "description": {
+          "default": "",
+          "title": "Description",
+          "type": "string"
+        },
+        "downtime_months": {
+          "default": 1,
+          "minimum": 0,
+          "title": "Downtime Months",
+          "type": "number"
+        },
+        "exclude_from_credit_loss": {
+          "default": false,
+          "title": "Exclude From Credit Loss",
+          "type": "boolean"
+        },
+        "in_place_rent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RentAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "in_place_rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "In Place Rent Growth Rate"
+        },
+        "in_place_rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "In Place Rent Growth Ref"
+        },
+        "lc_category_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lc Category Ref"
+        },
+        "lease_cycle_month": {
+          "anyOf": [
+            {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": 8,
+          "title": "Lease Cycle Month"
+        },
+        "lease_up": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/LeaseUpEntry"
+              },
+              "maxItems": 100,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lease Up"
+        },
+        "market_rent": {
+          "$ref": "#/$defs/RentAmount"
+        },
+        "num_units": {
+          "minimum": 1,
+          "title": "Num Units",
+          "type": "integer"
+        },
+        "remaining_lease_term": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Remaining Lease Term"
+        },
+        "renewal_probability_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Probability Rate"
+        },
+        "renewal_probability_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Probability Ref"
+        },
+        "renewal_rent": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RentAmount"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "renewal_rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Rent Growth Rate"
+        },
+        "renewal_rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Renewal Rent Growth Ref"
+        },
+        "renovation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RenovationConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rent_growth_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rent Growth Rate"
+        },
+        "rent_growth_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rent Growth Ref"
+        },
+        "standard_lease_term": {
+          "default": 11,
+          "minimum": 1,
+          "title": "Standard Lease Term",
+          "type": "integer"
+        },
+        "subtype": {
+          "const": "student_housing",
+          "default": "student_housing",
+          "title": "Subtype",
+          "type": "string"
+        },
+        "turnover_cost": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TurnoverCost"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit_size": {
+          "minimum": 0,
+          "title": "Unit Size",
+          "type": "number"
+        },
+        "unit_type_id": {
+          "title": "Unit Type Id",
+          "type": "string"
+        },
+        "units_vacant": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Units Vacant",
+          "type": "integer"
+        },
+        "vacancy_rate": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rate"
+        },
+        "vacancy_rate_method": {
+          "anyOf": [
+            {
+              "enum": [
+                "constant",
+                "fluctuating",
+                "custom_monthly"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rate Method"
+        },
+        "vacancy_rates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vacancy Rates"
+        }
+      },
+      "required": [
+        "unit_type_id",
+        "num_units",
+        "unit_size",
+        "market_rent"
+      ],
+      "title": "StudentHousingUnitType",
+      "type": "object"
+    },
+    "TurnoverCost": {
+      "additionalProperties": false,
+      "description": "Turnover cost configuration.",
+      "properties": {
+        "inflation_method_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflation Method Ref"
+        },
+        "method": {
+          "default": "none",
+          "enum": [
+            "none",
+            "renovation",
+            "amount",
+            "amount_per_uom",
+            "pct_monthly_rent",
+            "pct_annual_rent"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "value": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "title": "TurnoverCost",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Container for unit rental inputs on a DCF.",
+  "properties": {
+    "achieved_rent_psf_schedule": {
+      "anyOf": [
+        {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Achieved Rent Psf Schedule"
+    },
+    "modeling_method": {
+      "default": "simple",
+      "enum": [
+        "simple",
+        "detailed"
+      ],
+      "title": "Modeling Method",
+      "type": "string"
+    },
+    "unit_types": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "apartment": "#/$defs/ApartmentUnitType",
+            "self_storage": "#/$defs/SelfStorageUnitType",
+            "student_housing": "#/$defs/StudentHousingUnitType"
+          },
+          "propertyName": "subtype"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/ApartmentUnitType"
+          },
+          {
+            "$ref": "#/$defs/SelfStorageUnitType"
+          },
+          {
+            "$ref": "#/$defs/StudentHousingUnitType"
+          }
+        ]
+      },
+      "maxItems": 2000,
+      "title": "Unit Types",
+      "type": "array"
+    }
+  },
+  "title": "UnitRentalInput",
+  "type": "object"
+}

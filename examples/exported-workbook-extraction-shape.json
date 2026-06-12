@@ -1,0 +1,38 @@
+{
+  "audit_manifest": {
+    "schema_version": "1.0",
+    "created_at": "2026-01-01T00:00:00Z",
+    "generator": "baseline_v0.9.0",
+    "parts": {
+      "inputs": {
+        "sha256": "<hash>"
+      },
+      "outputs": {
+        "sha256": "<hash>"
+      }
+    }
+  },
+  "inputs": {
+    "schema_version": "1.0",
+    "project": {
+      "property_name": "Example Property",
+      "property_type": "office"
+    }
+  },
+  "outputs": {
+    "schema_version": "1.0",
+    "engine_version": "0.9.0",
+    "valuation": {
+      "total_pv": 0,
+      "irr_annual": null,
+      "terminal_value": 0,
+      "net_reversion": 0
+    },
+    "annual_waterfall": {
+      "noi": [0, 0, 0],
+      "cfbd": [0, 0, 0],
+      "cfad": [0, 0, 0]
+    }
+  }
+}
+

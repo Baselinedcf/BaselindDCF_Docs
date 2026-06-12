@@ -1,0 +1,23 @@
+# Local agent working files
+property-generation/incoming/*
+property-generation/working-notes/*
+property-generation/outputs/*
+property-generation/validation/*
+
+!property-generation/incoming/.gitkeep
+!property-generation/working-notes/.gitkeep
+!property-generation/outputs/.gitkeep
+!property-generation/validation/.gitkeep
+
+# Python/runtime noise
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

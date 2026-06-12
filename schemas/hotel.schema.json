@@ -1,0 +1,1473 @@
+{
+  "$defs": {
+    "CapitalReserve": {
+      "additionalProperties": false,
+      "description": "Capital reserve (FF&E reserve) — configurable basis.",
+      "properties": {
+        "basis": {
+          "default": "total_revenue",
+          "enum": [
+            "total_revenue",
+            "departmental_profit"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "pct_of_total_revenue": {
+          "default": 0.04,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Pct Of Total Revenue",
+          "type": "number"
+        }
+      },
+      "title": "CapitalReserve",
+      "type": "object"
+    },
+    "CompSetHotel": {
+      "additionalProperties": false,
+      "description": "A competitive set hotel.",
+      "properties": {
+        "adr": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adr"
+        },
+        "chain_scale": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Chain Scale"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "occupancy": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Occupancy"
+        },
+        "rooms": {
+          "minimum": 1,
+          "title": "Rooms",
+          "type": "integer"
+        },
+        "year_opened": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year Opened"
+        }
+      },
+      "required": [
+        "name",
+        "rooms"
+      ],
+      "title": "CompSetHotel",
+      "type": "object"
+    },
+    "CostApproachInput": {
+      "additionalProperties": false,
+      "description": "Inputs for cost approach valuation.",
+      "properties": {
+        "base_construction_cost": {
+          "minimum": 0,
+          "title": "Base Construction Cost",
+          "type": "number"
+        },
+        "entrepreneurial_profit_pct": {
+          "default": 0.2,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Entrepreneurial Profit Pct",
+          "type": "number"
+        },
+        "external_obsolescence_pct": {
+          "default": 0.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "External Obsolescence Pct",
+          "type": "number"
+        },
+        "ffe": {
+          "$ref": "#/$defs/FFEInput"
+        },
+        "functional_obsolescence_pct": {
+          "default": 0.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Functional Obsolescence Pct",
+          "type": "number"
+        },
+        "indirect_cost_pct": {
+          "default": 0.1,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Indirect Cost Pct",
+          "type": "number"
+        },
+        "lump_sums": {
+          "default": 0.0,
+          "minimum": 0,
+          "title": "Lump Sums",
+          "type": "number"
+        },
+        "physical_deterioration_pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Physical Deterioration Pct",
+          "type": "number"
+        },
+        "site_value": {
+          "minimum": 0,
+          "title": "Site Value",
+          "type": "number"
+        }
+      },
+      "required": [
+        "base_construction_cost",
+        "physical_deterioration_pct",
+        "site_value",
+        "ffe"
+      ],
+      "title": "CostApproachInput",
+      "type": "object"
+    },
+    "DirectCapInput": {
+      "additionalProperties": false,
+      "description": "Inputs for direct capitalization approach.",
+      "properties": {
+        "overall_cap_rate": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Overall Cap Rate",
+          "type": "number"
+        },
+        "stabilized_year_index": {
+          "minimum": 0,
+          "title": "Stabilized Year Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "overall_cap_rate",
+        "stabilized_year_index"
+      ],
+      "title": "DirectCapInput",
+      "type": "object"
+    },
+    "FFEInput": {
+      "additionalProperties": false,
+      "description": "FF&E (Furniture, Fixtures & Equipment) valuation inputs.",
+      "properties": {
+        "cost_per_room": {
+          "minimum": 0,
+          "title": "Cost Per Room",
+          "type": "number"
+        },
+        "economic_life": {
+          "default": 10,
+          "minimum": 1,
+          "title": "Economic Life",
+          "type": "integer"
+        },
+        "effective_age": {
+          "minimum": 0,
+          "title": "Effective Age",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cost_per_room",
+        "effective_age"
+      ],
+      "title": "FFEInput",
+      "type": "object"
+    },
+    "HistoricalYear": {
+      "additionalProperties": false,
+      "description": "One year of historical operating data.",
+      "properties": {
+        "adr": {
+          "minimum": 0,
+          "title": "Adr",
+          "type": "number"
+        },
+        "noi": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Noi"
+        },
+        "occupancy": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Occupancy",
+          "type": "number"
+        },
+        "revpar": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Revpar"
+        },
+        "total_revenue": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Revenue"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "year",
+        "occupancy",
+        "adr"
+      ],
+      "title": "HistoricalYear",
+      "type": "object"
+    },
+    "HotelAssumptions": {
+      "additionalProperties": false,
+      "description": "Master assumption set driving the hotel DCF.",
+      "properties": {
+        "adr_by_year": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Adr By Year",
+          "type": "array"
+        },
+        "capital_reserve": {
+          "$ref": "#/$defs/CapitalReserve"
+        },
+        "days_open": {
+          "default": 365,
+          "maximum": 366,
+          "minimum": 1,
+          "title": "Days Open",
+          "type": "integer"
+        },
+        "departmental_expenses": {
+          "items": {
+            "$ref": "#/$defs/HotelExpenseItem"
+          },
+          "title": "Departmental Expenses",
+          "type": "array"
+        },
+        "fixed_charges": {
+          "items": {
+            "$ref": "#/$defs/HotelFixedCharge"
+          },
+          "title": "Fixed Charges",
+          "type": "array"
+        },
+        "inflation_rate": {
+          "default": 0.03,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Inflation Rate",
+          "type": "number"
+        },
+        "management_fee": {
+          "$ref": "#/$defs/ManagementFee"
+        },
+        "occupancy_by_year": {
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1,
+          "title": "Occupancy By Year",
+          "type": "array"
+        },
+        "revenue_departments": {
+          "items": {
+            "$ref": "#/$defs/RevenueDepartment"
+          },
+          "title": "Revenue Departments",
+          "type": "array"
+        },
+        "stabilization_year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stabilization Year"
+        },
+        "undistributed_expenses": {
+          "items": {
+            "$ref": "#/$defs/HotelUndistributedExpense"
+          },
+          "title": "Undistributed Expenses",
+          "type": "array"
+        }
+      },
+      "required": [
+        "occupancy_by_year",
+        "adr_by_year"
+      ],
+      "title": "HotelAssumptions",
+      "type": "object"
+    },
+    "HotelExpenseItem": {
+      "additionalProperties": false,
+      "description": "Expense line with fixed/variable split.",
+      "properties": {
+        "base_amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Amount"
+        },
+        "department": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Department"
+        },
+        "detailed_yearly_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detailed Yearly Values"
+        },
+        "driver": {
+          "enum": [
+            "occupied_rooms",
+            "total_revenue",
+            "room_revenue"
+          ],
+          "title": "Driver",
+          "type": "string"
+        },
+        "fixed_pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fixed Pct",
+          "type": "number"
+        },
+        "inflation_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflation Ref"
+        },
+        "input_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input Method"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "per_available_room": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Per Available Room"
+        },
+        "per_occupied_room": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Per Occupied Room"
+        },
+        "ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ratio"
+        },
+        "variable_pct": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Variable Pct",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "fixed_pct",
+        "variable_pct",
+        "driver"
+      ],
+      "title": "HotelExpenseItem",
+      "type": "object"
+    },
+    "HotelFixedCharge": {
+      "additionalProperties": false,
+      "description": "Fixed charge — supports the same input methods as undistributed expenses, plus an is_property_tax flag.",
+      "properties": {
+        "account_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Account Code"
+        },
+        "amount_period": {
+          "anyOf": [
+            {
+              "enum": [
+                "per_year",
+                "per_month"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "per_year",
+          "title": "Amount Period"
+        },
+        "amount_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amount Value"
+        },
+        "base_amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Amount"
+        },
+        "base_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Value"
+        },
+        "detailed_por_par_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detailed Por Par Values"
+        },
+        "detailed_yearly_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detailed Yearly Values"
+        },
+        "growth_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Growth Rate"
+        },
+        "impacts_cash_flow": {
+          "default": true,
+          "title": "Impacts Cash Flow",
+          "type": "boolean"
+        },
+        "inflation_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflation Ref"
+        },
+        "input_method": {
+          "default": "amount",
+          "enum": [
+            "amount",
+            "amount_per_area_unit",
+            "detailed_amount",
+            "detailed_per_area_unit",
+            "por",
+            "par",
+            "detailed_por",
+            "detailed_par",
+            "pct_of_line",
+            "pct_of_line_detailed"
+          ],
+          "title": "Input Method",
+          "type": "string"
+        },
+        "is_property_tax": {
+          "default": false,
+          "title": "Is Property Tax",
+          "type": "boolean"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "occupancy_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "fixed",
+          "title": "Occupancy Type"
+        },
+        "pct_line_refs": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/HotelPctLineRef"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pct Line Refs"
+        },
+        "pct_recoverable": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pct Recoverable"
+        },
+        "variable_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variable Pct"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "HotelFixedCharge",
+      "type": "object"
+    },
+    "HotelPctLineRef": {
+      "additionalProperties": false,
+      "description": "Reference to a hotel CF line item for % of Line calculation.",
+      "properties": {
+        "by_year": {
+          "default": false,
+          "title": "By Year",
+          "type": "boolean"
+        },
+        "flat_pct": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Flat Pct"
+        },
+        "ref_key": {
+          "title": "Ref Key",
+          "type": "string"
+        },
+        "year_pcts": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year Pcts"
+        }
+      },
+      "required": [
+        "ref_key"
+      ],
+      "title": "HotelPctLineRef",
+      "type": "object"
+    },
+    "HotelSaleComp": {
+      "additionalProperties": false,
+      "description": "A hotel sale comparable.",
+      "properties": {
+        "cap_rate": {
+          "anyOf": [
+            {
+              "exclusiveMinimum": 0,
+              "maximum": 1,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cap Rate"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "price_per_room": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Price Per Room"
+        },
+        "rooms": {
+          "minimum": 1,
+          "title": "Rooms",
+          "type": "integer"
+        },
+        "sale_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sale Date"
+        },
+        "sale_price": {
+          "minimum": 0,
+          "title": "Sale Price",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "sale_price",
+        "rooms"
+      ],
+      "title": "HotelSaleComp",
+      "type": "object"
+    },
+    "HotelUndistributedExpense": {
+      "additionalProperties": false,
+      "description": "Undistributed expense with full method system (no Prop 13/Reassessment).",
+      "properties": {
+        "account_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Account Code"
+        },
+        "amount_period": {
+          "anyOf": [
+            {
+              "enum": [
+                "per_year",
+                "per_month"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "per_year",
+          "title": "Amount Period"
+        },
+        "amount_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Amount Value"
+        },
+        "base_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Value"
+        },
+        "detailed_por_par_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detailed Por Par Values"
+        },
+        "detailed_yearly_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detailed Yearly Values"
+        },
+        "growth_rate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Growth Rate"
+        },
+        "impacts_cash_flow": {
+          "default": true,
+          "title": "Impacts Cash Flow",
+          "type": "boolean"
+        },
+        "inflation_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflation Ref"
+        },
+        "input_method": {
+          "default": "amount",
+          "enum": [
+            "amount",
+            "amount_per_area_unit",
+            "detailed_amount",
+            "detailed_per_area_unit",
+            "por",
+            "par",
+            "detailed_por",
+            "detailed_par",
+            "pct_of_line",
+            "pct_of_line_detailed"
+          ],
+          "title": "Input Method",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "occupancy_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "fixed",
+          "title": "Occupancy Type"
+        },
+        "pct_line_refs": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/HotelPctLineRef"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pct Line Refs"
+        },
+        "pct_recoverable": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pct Recoverable"
+        },
+        "variable_pct": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Variable Pct"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "HotelUndistributedExpense",
+      "type": "object"
+    },
+    "ManagementFee": {
+      "additionalProperties": false,
+      "description": "Management fee — configurable basis (total revenue or dept profit).",
+      "properties": {
+        "basis": {
+          "default": "total_revenue",
+          "enum": [
+            "total_revenue",
+            "departmental_profit"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "pct_of_total_revenue": {
+          "default": 0.03,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Pct Of Total Revenue",
+          "type": "number"
+        }
+      },
+      "title": "ManagementFee",
+      "type": "object"
+    },
+    "RevenueDepartment": {
+      "additionalProperties": false,
+      "description": "A hotel revenue department (F&B, Other Operated, etc.).",
+      "properties": {
+        "base_amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base Amount"
+        },
+        "detailed_yearly_values": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detailed Yearly Values"
+        },
+        "driver": {
+          "default": "occupied_rooms",
+          "enum": [
+            "occupied_rooms",
+            "total_revenue"
+          ],
+          "title": "Driver",
+          "type": "string"
+        },
+        "fixed_pct": {
+          "default": 0.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Fixed Pct",
+          "type": "number"
+        },
+        "inflation_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflation Ref"
+        },
+        "input_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input Method"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "per_available_room": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Per Available Room"
+        },
+        "per_occupied_room": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Per Occupied Room"
+        },
+        "ratio_of_total": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ratio Of Total"
+        },
+        "variable_pct": {
+          "default": 1.0,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Variable Pct",
+          "type": "number"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "RevenueDepartment",
+      "type": "object"
+    },
+    "STRDataPoint": {
+      "additionalProperties": false,
+      "description": "Monthly STR data point.",
+      "properties": {
+        "adr": {
+          "minimum": 0,
+          "title": "Adr",
+          "type": "number"
+        },
+        "demand": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Demand"
+        },
+        "month": {
+          "maximum": 12,
+          "minimum": 1,
+          "title": "Month",
+          "type": "integer"
+        },
+        "occupancy": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Occupancy",
+          "type": "number"
+        },
+        "revpar": {
+          "minimum": 0,
+          "title": "Revpar",
+          "type": "number"
+        },
+        "supply": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Supply"
+        },
+        "year": {
+          "title": "Year",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "year",
+        "month",
+        "occupancy",
+        "adr",
+        "revpar"
+      ],
+      "title": "STRDataPoint",
+      "type": "object"
+    },
+    "SalesComparisonInput": {
+      "additionalProperties": false,
+      "description": "Inputs for sales comparison approach.",
+      "properties": {
+        "comps": {
+          "items": {
+            "$ref": "#/$defs/HotelSaleComp"
+          },
+          "title": "Comps",
+          "type": "array"
+        },
+        "price_per_room": {
+          "minimum": 0,
+          "title": "Price Per Room",
+          "type": "number"
+        }
+      },
+      "required": [
+        "price_per_room"
+      ],
+      "title": "SalesComparisonInput",
+      "type": "object"
+    },
+    "SubmarketData": {
+      "additionalProperties": false,
+      "description": "Submarket overview data.",
+      "properties": {
+        "adr": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adr"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        },
+        "occupancy": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Occupancy"
+        },
+        "pipeline_rooms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pipeline Rooms"
+        },
+        "total_rooms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Rooms"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "SubmarketData",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Top-level hotel input — mutually exclusive with tenants/unit_rental.",
+  "properties": {
+    "assumptions": {
+      "$ref": "#/$defs/HotelAssumptions"
+    },
+    "competitive_set": {
+      "items": {
+        "$ref": "#/$defs/CompSetHotel"
+      },
+      "title": "Competitive Set",
+      "type": "array"
+    },
+    "cost_approach": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CostApproachInput"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "demand_generators": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Demand Generators",
+      "type": "object"
+    },
+    "direct_cap": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DirectCapInput"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "historical_years": {
+      "items": {
+        "$ref": "#/$defs/HistoricalYear"
+      },
+      "title": "Historical Years",
+      "type": "array"
+    },
+    "hotel_type": {
+      "enum": [
+        "full_service",
+        "select_service",
+        "extended_stay",
+        "resort",
+        "boutique"
+      ],
+      "title": "Hotel Type",
+      "type": "string"
+    },
+    "rooms": {
+      "minimum": 1,
+      "title": "Rooms",
+      "type": "integer"
+    },
+    "sales_comparison": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SalesComparisonInput"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "str_data": {
+      "items": {
+        "$ref": "#/$defs/STRDataPoint"
+      },
+      "title": "Str Data",
+      "type": "array"
+    },
+    "str_scale": {
+      "enum": [
+        "luxury",
+        "upper_upscale",
+        "upscale",
+        "upper_midscale",
+        "midscale",
+        "economy"
+      ],
+      "title": "Str Scale",
+      "type": "string"
+    },
+    "submarket_data": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SubmarketData"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "rooms",
+    "hotel_type",
+    "str_scale",
+    "assumptions"
+  ],
+  "title": "HotelInput",
+  "type": "object"
+}

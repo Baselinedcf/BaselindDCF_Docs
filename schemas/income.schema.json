@@ -1,0 +1,319 @@
+{
+  "$defs": {
+    "PctLineItemRefEntry": {
+      "additionalProperties": false,
+      "description": "A reference to another line item with a percentage.",
+      "properties": {
+        "by_year": {
+          "default": false,
+          "title": "By Year",
+          "type": "boolean"
+        },
+        "flat_pct": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Flat Pct",
+          "type": "number"
+        },
+        "ref_key": {
+          "title": "Ref Key",
+          "type": "string"
+        },
+        "year_pcts": {
+          "anyOf": [
+            {
+              "items": {
+                "maximum": 1,
+                "minimum": -1,
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year Pcts"
+        }
+      },
+      "required": [
+        "ref_key",
+        "flat_pct"
+      ],
+      "title": "PctLineItemRefEntry",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Income line items (other income, recoverable income).",
+  "items": {
+    "additionalProperties": false,
+    "description": "A single income line item.",
+    "properties": {
+      "account_code": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Account Code"
+      },
+      "amount_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Amount Inflation Ref"
+      },
+      "amount_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Amount Period"
+      },
+      "amount_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Amount Value"
+      },
+      "base_por_par_value": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Base Por Par Value"
+      },
+      "detailed_custom_inflation_rates": {
+        "anyOf": [
+          {
+            "items": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Custom Inflation Rates"
+      },
+      "detailed_inflation_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Inflation Ref"
+      },
+      "detailed_monthly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Monthly Values"
+      },
+      "detailed_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Period"
+      },
+      "detailed_por_par_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Por Par Values"
+      },
+      "detailed_yearly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Detailed Yearly Values"
+      },
+      "exclude_from_terminal_noi": {
+        "default": false,
+        "title": "Exclude From Terminal Noi",
+        "type": "boolean"
+      },
+      "impacts_cash_flow": {
+        "default": true,
+        "title": "Impacts Cash Flow",
+        "type": "boolean"
+      },
+      "income_line_id": {
+        "title": "Income Line Id",
+        "type": "string"
+      },
+      "input_method": {
+        "enum": [
+          "amount",
+          "amount_per_uom",
+          "amount_per_unit",
+          "detailed_amount",
+          "detailed_per_uom",
+          "detailed_per_unit",
+          "pct_of_line_item",
+          "por",
+          "par",
+          "detailed_por",
+          "detailed_par"
+        ],
+        "title": "Input Method",
+        "type": "string"
+      },
+      "line_item_name": {
+        "title": "Line Item Name",
+        "type": "string"
+      },
+      "notes": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Notes"
+      },
+      "occupancy_type": {
+        "enum": [
+          "fixed",
+          "variable_by_occupancy"
+        ],
+        "title": "Occupancy Type",
+        "type": "string"
+      },
+      "pct_line_item_refs": {
+        "anyOf": [
+          {
+            "items": {
+              "$ref": "#/$defs/PctLineItemRefEntry"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Pct Line Item Refs"
+      },
+      "tenant_ref": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Tenant Ref"
+      },
+      "variable_pct": {
+        "anyOf": [
+          {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Variable Pct"
+      }
+    },
+    "required": [
+      "income_line_id",
+      "line_item_name",
+      "occupancy_type",
+      "input_method"
+    ],
+    "title": "IncomeLine",
+    "type": "object"
+  },
+  "maxItems": 100,
+  "title": "IncomeLineList",
+  "type": "array"
+}

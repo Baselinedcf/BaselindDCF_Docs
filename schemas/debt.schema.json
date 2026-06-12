@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Loan / debt facilities.",
+  "items": {
+    "additionalProperties": false,
+    "description": "A single loan on the property.",
+    "properties": {
+      "loan_description": {
+        "title": "Loan Description",
+        "type": "string"
+      },
+      "loan_id": {
+        "title": "Loan Id",
+        "type": "string"
+      },
+      "notes": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Notes"
+      },
+      "outstanding_balance": {
+        "minimum": 0,
+        "title": "Outstanding Balance",
+        "type": "number"
+      },
+      "payment_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Payment Amount"
+      },
+      "payment_monthly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Payment Monthly Values"
+      },
+      "payment_period": {
+        "anyOf": [
+          {
+            "enum": [
+              "per_year",
+              "per_month"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Payment Period"
+      },
+      "payment_schedule_method": {
+        "enum": [
+          "none",
+          "annual",
+          "monthly",
+          "detailed_amount"
+        ],
+        "title": "Payment Schedule Method",
+        "type": "string"
+      },
+      "payment_yearly_values": {
+        "anyOf": [
+          {
+            "items": {
+              "type": "number"
+            },
+            "type": "array"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Payment Yearly Values"
+      },
+      "payoff_amount": {
+        "anyOf": [
+          {
+            "minimum": 0,
+            "type": "number"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Payoff Amount"
+      }
+    },
+    "required": [
+      "loan_id",
+      "loan_description",
+      "outstanding_balance",
+      "payment_schedule_method"
+    ],
+    "title": "Loan",
+    "type": "object"
+  },
+  "maxItems": 10,
+  "title": "LoanList",
+  "type": "array"
+}

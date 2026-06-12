@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DCFInputEnvelope",
+  "description": "Top-level Baseline import payload. Section schemas are generated from the Baseline input models.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Optional input schema version marker."
+    },
+    "project": {
+      "$ref": "project.schema.json"
+    },
+    "tenants": {
+      "$ref": "tenants.schema.json"
+    },
+    "market_leasing": {
+      "$ref": "market_leasing.schema.json"
+    },
+    "recoveries": {
+      "$ref": "recoveries.schema.json"
+    },
+    "unit_rental": {
+      "anyOf": [
+        { "$ref": "unit_rental.schema.json" },
+        { "type": "null" }
+      ],
+      "default": null
+    },
+    "hotel": {
+      "anyOf": [
+        { "$ref": "hotel.schema.json" },
+        { "type": "null" }
+      ],
+      "default": null
+    },
+    "dictionaries": {
+      "$ref": "dictionaries.schema.json"
+    },
+    "income": {
+      "$ref": "income.schema.json"
+    },
+    "expenses": {
+      "$ref": "expenses.schema.json"
+    },
+    "capex": {
+      "$ref": "capex.schema.json"
+    },
+    "debt": {
+      "$ref": "debt.schema.json"
+    },
+    "resale_pv": {
+      "anyOf": [
+        { "$ref": "resale_pv.schema.json" },
+        { "type": "null" }
+      ],
+      "default": null
+    }
+  }
+}
